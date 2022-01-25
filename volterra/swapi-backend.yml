@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svk-swapi-api
+  namespace: s-vankalken
+  labels:
+    app: swapi
+  annotations:
+    ves.io/workload-flavor: tiny
+    ves.io/sites: svankalken/svankalken-vs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: swapi
+  template:
+    metadata:
+      labels:
+        app: swapi
+    spec:
+      containers:
+      - image: public.ecr.aws/y6q2t0j9/demos:swapi-api
+        imagePullPolicy: IfNotPresent
+        name: swapi
+        ports:
+          - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: swapi-svc
+  labels:
+    app: swapi-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: swapi-svc
+  ports:
+  - name: grpc
+    port: 3000
+    targetPort: 3000

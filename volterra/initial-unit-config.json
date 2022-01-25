@@ -1,0 +1,21 @@
+{
+	"listeners": {
+		"*:8080": {
+			"pass": "applications/python"
+		}
+
+	},
+
+	"applications": {
+		"python": {
+			"type": "python",
+			"path": "/unit-data/git-pull-api/",
+			"module": "wsgi",
+			"callable": "app",
+			"environment": {
+				"version": "2.0",
+				"git_repo": "https://github.com/codecowboydotio/git-pull-api"
+			}
+		}
+	}
+}

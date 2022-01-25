@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svk-swapi-frontend
+  namespace: s-vankalken
+  labels:
+    app: swapi-frontend
+  annotations:
+    ves.io/workload-flavor: tiny
+    ves.io/virtual-sites: s-vankalken/s-vankalken-vs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: swapi-frontend
+  template:
+    metadata:
+      labels:
+        app: swapi-frontend
+    spec:
+      containers:
+      - image: public.ecr.aws/y6q2t0j9/demos:swapi-frontend
+        imagePullPolicy: Always
+        name: swapi-frontend
+        ports:
+          - containerPort: 8080
+        env:
+          - name: API_APP_SERVER_URL
+            value: "https://svk-swapi-api.sales-public.f5demos.com"
+          - name: PEOPLE_API_APP_SERVER_URL
+            value: "https://svk-swapi-api.sales-public.f5demos.com"
+          - name: VEHICLES_API_APP_SERVER_URL
+            value: "https://svk-swapi-api.sales-public.f5demos.com"
+          - name: STARSHIPS_API_APP_SERVER_URL
+            value: "https://svk-swapi-api.sales-public.f5demos.com"
+          - name: PLANETS_API_APP_SERVER_URL
+            value: "https://svk-swapi-api.sales-public.f5demos.com"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 180
+          periodSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: swapi-frontend
+  labels:
+    app: swapi-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: swapi-frontend
+  ports:
+  - name: grpc
+    port: 8080
+    targetPort: 8080
+
