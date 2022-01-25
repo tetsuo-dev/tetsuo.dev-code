@@ -1,0 +1,41 @@
+Example git pull API for unit (works outside of unit actually).
+Pull API to retrieve git repo ready to use on the system that the API runs on.
+---
+parameters:
+  - in: body
+    description: The data to send to the API. This data is json format, and describes the source repository, the destination on disk, and the branch that you want to API to perform a pull from.
+    schema:
+      type: object
+      required:
+        - repo
+        - dest
+        - branch
+      properties:
+       repo: 
+         type: string 
+         example: http://github.com/codecowboydotio/git-pull-api/
+       dest: 
+         type: string 
+         example: /www/fooble
+       branch: 
+         type: string 
+         example: main
+responses:
+  500:
+    description: Something went very wrong
+  200:
+    description: Return the repo, branch and destination
+    schema:
+      properties:
+        repo:
+          type: string
+          description: The Repository
+          default: none
+        branch:
+          type: string
+          description: The Branch
+          default: none
+        dest:
+          type: string
+          description: The Destination
+          default: none
