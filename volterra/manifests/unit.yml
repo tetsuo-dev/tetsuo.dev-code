@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svk-unit
+  namespace: s-vankalken
+  labels:
+    app: svk-unit
+  annotations:
+    ves.io/workload-flavor: ves-io-large
+    ves.io/virtual-sites: s-vankalken/s-vankalken-vs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: svk-unit
+  template:
+    metadata:
+      labels:
+        app: svk-unit
+    spec:
+      containers:
+      - image: public.ecr.aws/y6q2t0j9/demos:full-unit
+        imagePullPolicy: Always
+        name: svk-unit
+        volumeMounts:
+        - name: unit-data
+          mountPath: /unit-data
+        ports:
+          - containerPort: 8080
+          - containerPort: 8181
+          - containerPort: 8888
+        env:
+          - name: PVC
+            value: "unit-data"
+          - name: UNIT_CONFIG_URL
+            value: "https://raw.githubusercontent.com/codecowboydotio/terraform/main/volterra/ce-site/initial-unit-config.json"
+      volumes:
+      - name: unit-data
+        persistentVolumeClaim:
+          claimName: unit-pvc 

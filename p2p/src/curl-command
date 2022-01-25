@@ -1,0 +1,1 @@
+ curl -X POST -H 'Content-type: application/json' http://10.1.1.151:3000/config -d '{ip : 10.1.1.151}'

@@ -1,0 +1,46 @@
+{
+	"listeners": {
+		"*:8080": {
+			"pass": "applications/python"
+		},
+
+		"*:8181": {
+                        "pass": "routes"
+		},
+
+                "*:8182": {
+                        "pass": "applications/java"
+                }
+        },
+
+        "routes": [
+                {
+                        "action": {
+                                "share": "/unit-data/pacman-unit/"
+                        }
+                }
+
+        ],
+
+
+	"applications": {
+		"python": {
+			"type": "python",
+			"path": "/unit-data/git-pull-api/",
+			"module": "wsgi",
+			"callable": "app",
+			"environment": {
+				"version": "2.0",
+				"git_repo": "https://github.com/codecowboydotio/git-pull-api"
+			}
+		},
+                "java": {
+                        "type": "java",
+                        "webapp": "/unit-data/jsp/",
+                        "environment": {
+                                "version": "3.0",
+                                "git_repo": "https://github.com/codecowboydotio/helloworld-java"
+                        }
+                }
+	}
+}
