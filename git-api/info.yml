@@ -1,0 +1,17 @@
+INFO API to get current server status.... and stuff
+---
+responses:
+  500:
+    description: Something went very wrong
+  200:
+    description: Return the repo, branch and destination
+    schema:
+      properties:
+        status:
+          type: string
+          description: Current status - returns "running" only
+          default: running
+        version:
+          type: string
+          description: version of the API that's currently running
+          default: none
