@@ -1,3 +1,3 @@
-# libp2p-experiements
+# libp2p-experiments
 
-see (https://codecowboy.io/development/libp2p/)
+see [blog post for further information](https://codecowboy.io/development/libp2p/)
