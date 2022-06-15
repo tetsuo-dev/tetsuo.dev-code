@@ -13,3 +13,4 @@ slack: https://join.slack.com/t/project-tetsuo/shared_invite/zt-11udr5vev-I7o0yE
 
 discord: https://discord.gg/dkHbP7PW
 
+Also check out this: https://codecowboy.io/development/libp2p/ on the beginnings of a distributed control plane.
