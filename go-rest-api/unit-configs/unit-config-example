@@ -1,0 +1,88 @@
+{
+	"listeners": {
+		"*:8080": {
+			"pass": "applications/python"
+		},
+		"*:8181": {
+			"pass": "applications/java"
+		},
+                "*:4000": {
+                        "pass": "applications/node"
+                },
+		"*:80": {
+			"pass": "routes"
+		}
+	},
+
+	"routes": [
+		{
+			"action": {
+				"share": "/www/pacman-unit/"
+			}
+		}
+	],
+
+	"applications": {
+                "java": {
+                        "type": "java",
+                        "webapp": "/www/jsp",
+                        "environment": {
+                                "version": "3.0",
+                                "git_repo": "https://github.com/codecowboydotio/helloworld-java"
+                        }
+                },
+		"python": {
+			"type": "python",
+			"path": "/www/git-pull-api/",
+			"module": "wsgi",
+			"callable": "app",
+			"environment": {
+				"version": "2.0",
+				"git_repo": "https://github.com/codecowboydotio/git-pull-api"
+			}
+		},
+                "node": {
+                       "type": "external",
+                       "working_directory": "/www/isolation",
+                       "executable": "/usr/bin/env",
+                       "arguments": [
+                           "node",
+                           "--experimental-modules",
+                           "--loader",
+                           "unit-http/loader.mjs",
+                           "--require",
+                           "unit-http/loader",
+                           "index.js"
+                       ],
+                       "processes": {
+                         "max": 10,
+                         "spare": 5,
+                         "idle_timeout": 20
+                       },
+                       "isolation": {
+                                   "namespaces": {
+                                      "cgroup": true,
+                                      "credential": true,
+                                      "mount": true,
+                                      "network": true,
+                                      "pid": true,
+                                      "uname": true
+                                   },
+                                   "uidmap": [
+                                      {
+                                         "host": 65534,
+                                         "container": 0,
+                                         "size": 200
+                                      }
+                                   ],
+                                   "gidmap": [
+                                      {
+                                         "host": 65534,
+                                         "container": 0,
+                                         "size": 200
+                                      }
+                                   ]
+                       }
+                }
+	}
+}

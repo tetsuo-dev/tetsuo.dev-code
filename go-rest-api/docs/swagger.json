@@ -1,0 +1,54 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Swagger API for Golang Project for git rest api",
+        "title": "GO Rest API Swagger API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "svk@codecowboydotio"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/codecowboydotio/go-rest-api/blob/main/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/pull": {
+            "post": {
+                "description": "Pull a github repository down.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "Pull a github repository down.",
+                "parameters": [
+                    {
+                        "description": "Branch Name",
+                        "name": "branch",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
