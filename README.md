@@ -1,6 +1,6 @@
 # project-tetsuo
 
-watch this space.....
+Release 0.1
 
 
 admins: 
