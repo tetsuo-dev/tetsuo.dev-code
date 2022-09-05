@@ -1,4 +1,4 @@
-# project-tetsuo
+# project-tetsuo: deploy code not containers
 
 Release 0.1
 
