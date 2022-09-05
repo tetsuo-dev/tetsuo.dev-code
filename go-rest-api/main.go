@@ -48,10 +48,6 @@ func gitPull(c *gin.Context) {
 
         if err := c.BindJSON(&json); err == nil {
            // IF NO ERROR IN BINDING
-           //c.JSON(http.StatusOK, gin.H{ 
-           //  "url": json.Url,
-           //  "branch": json.Branch,
-           //})
            fmt.Printf("No error in JSON binding: URL: %s Branch: %s\n", json.Url, json.Branch) 
            // Perform GIT pull as a first try
            targetUrl, err := url.Parse(json.Url)
@@ -74,38 +70,38 @@ func gitPull(c *gin.Context) {
                })
                fmt.Printf("pull: %s\n", pull)
                fmt.Printf("pull: %T\n", pull)
+               if pull == nil { 
+                 c.JSON(http.StatusOK, gin.H{
+                       "message": "Performed pull on existing repo to get updates from origin",
+                       "repository": json.Url,
+                       "branch": json.Branch})
+                 return
+               } //end of pull has no error
                if pull != nil {
-               fmt.Printf("pull error: %s\n", pull.Error())
+                 fmt.Printf("hit pull not equal nil")
                  c.JSON(http.StatusOK, gin.H{
                        "message": pull.Error(),
                        "repository": json.Url,
                        "branch": json.Branch})
                  return
-               } else { //end pull.error
-                 fmt.Printf("pull error: %s\n", pull.Error())
-                   c.JSON(http.StatusOK, gin.H{
-                         "message": pull.Error(),
-                         "repository": json.Url,
-                         "branch": json.Branch})
-                   return
-               }  //end pull no error
+               } // end of error on pull request
                if err != nil { fmt.Printf(err.Error()) }
              } // end if repository exists
+             // report the error from the repo - likely to be repo exists
              c.JSON(http.StatusOK, gin.H{
-                   "error": err.Error(),
+                   "message": err.Error(),
                    "repository": json.Url,
                    "branch": json.Branch})
              return
            } else {
-             //If we hit here then there is no error in the original PlainClone()
+             fmt.Printf("no error and clone success")
              c.JSON(http.StatusOK, gin.H{
                    "repository": json.Url,
-                   "status": "success",
-                   "branch": json.Branch})
-             return
-           }// end if error on Plainclone
-        } else {
-           fmt.Printf("stuff: %s\n", json.Url)
+                   "branch": json.Branch,
+                   "message": "success"})
+           } //end no error and clone success 
+        } else { //end of if statement on binding
+           fmt.Printf("Binding: %s\n", json.Url)
            // IF WE HIT HERE IT MEANS THERE IS AN ERROR IN BINDING
            c.JSON(http.StatusBadRequest, gin.H{
                 "error": "VALIDATEERR-1",
