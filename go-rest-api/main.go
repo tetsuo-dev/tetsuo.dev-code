@@ -17,7 +17,7 @@ import (
         _ "github.com/codecowboydotio/go-rest-api/docs"
         "github.com/tidwall/sjson"
         "unit.nginx.org/go"
-        "github.com/buger/jsonparser"
+        _ "github.com/buger/jsonparser"
 
 )
 
