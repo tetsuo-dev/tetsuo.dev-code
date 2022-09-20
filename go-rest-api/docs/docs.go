@@ -68,8 +68,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "GO Rest API Swagger API",
-	Description:      "Swagger API for Golang Project for git rest api",
+	Title:            "Tetsuo GO Rest API Swagger API",
+	Description:      "Swagger API for Tetsuo Golang Project for git rest api",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

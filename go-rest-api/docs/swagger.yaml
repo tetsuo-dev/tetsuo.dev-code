@@ -2,12 +2,12 @@ info:
   contact:
     email: svk@codecowboydotio
     name: API Support
-  description: Swagger API for Golang Project for git rest api
+  description: Swagger API for Tetsuo Golang Project for git rest api
   license:
     name: MIT
     url: https://github.com/codecowboydotio/go-rest-api/blob/main/LICENSE
   termsOfService: http://swagger.io/terms/
-  title: GO Rest API Swagger API
+  title: Tetsuo GO Rest API Swagger API
   version: "1.0"
 paths:
   /pull:
