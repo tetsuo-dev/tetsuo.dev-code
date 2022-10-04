@@ -6,7 +6,7 @@ import (
         "os"
         "path"
         "reflect"
-        "io/ioutil"
+        _ "io/ioutil"
 	"net/http"
         "net/url"
         "github.com/gin-gonic/gin"
@@ -17,7 +17,7 @@ import (
         _ "github.com/codecowboydotio/go-rest-api/docs"
         "github.com/tidwall/sjson"
         "unit.nginx.org/go"
-        //_ "github.com/buger/jsonparser"
+        _ "github.com/buger/jsonparser"
 
 )
 
@@ -80,7 +80,7 @@ func gitPull(c *gin.Context) {
                  return
                } //end of pull has no error
                if pull != nil {
-                 fmt.Printf("hit pull not equal nil")
+                 fmt.Printf("git pull not equal nil")
                  c.JSON(http.StatusOK, gin.H{
                        "message": pull.Error(),
                        "repository": json.Url,
@@ -117,21 +117,31 @@ func newApp(c *gin.Context) {
         // Send new request to local unit that configures an app
         // need language type as a varible.
 
-        content, err := ioutil.ReadFile("./unit-configs/unit-template")
-        if err != nil {
-            //log.("Error when opening file: ", err)
-            c.JSON(http.StatusBadRequest, gin.H{
-                "error": "foo",
-                "message": err.Error(), 
-            })
-        } else {
-            c.JSON(http.StatusBadRequest, gin.H{
-                "error": "foo",
-                "message": content, 
-            })
-        } // end else err
-        println(content)
+        //content, err := ioutil.ReadFile("./unit-configs/unit-template")
+        //if err != nil {
+        //    //log.("Error when opening file: ", err)
+        //    c.JSON(http.StatusBadRequest, gin.H{
+        //        "error": "foo",
+        //        "message": err.Error(), 
+        //    })
+        //} else {
+        //    c.JSON(http.StatusBadRequest, gin.H{
+        //        "error": "foo",
+        //        "message": content, 
+        //    })
+        //} // end else err
+        //println(content)
         ajson, _ := sjson.Set("", "app", "version")
+        ajson = `{
+                   "listeners": {
+                     "*:8080": {
+                             "pass": "applications/node"
+                     }
+                   },
+                   "applications": {
+                     "node": {}
+                   }
+                 }`
         println(ajson)
         fmt.Println(reflect.TypeOf(ajson).String())
         c.JSON(http.StatusOK, gin.H{})
