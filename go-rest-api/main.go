@@ -2,11 +2,9 @@ package main
 
 import (
 	"fmt"
-        _ "log"
         "os"
         "path"
-        "reflect"
-        _ "io/ioutil"
+        "io/ioutil"
 	"net/http"
         "net/url"
         "github.com/gin-gonic/gin"
@@ -15,10 +13,8 @@ import (
         swaggerFiles "github.com/swaggo/files"
         "github.com/swaggo/gin-swagger"
         _ "github.com/codecowboydotio/go-rest-api/docs"
-        "github.com/tidwall/sjson"
         "unit.nginx.org/go"
-        _ "github.com/buger/jsonparser"
-
+        "encoding/json"
 )
 
 
@@ -117,34 +113,93 @@ func newApp(c *gin.Context) {
         // Send new request to local unit that configures an app
         // need language type as a varible.
 
-        //content, err := ioutil.ReadFile("./unit-configs/unit-template")
-        //if err != nil {
-        //    //log.("Error when opening file: ", err)
-        //    c.JSON(http.StatusBadRequest, gin.H{
-        //        "error": "foo",
-        //        "message": err.Error(), 
-        //    })
-        //} else {
-        //    c.JSON(http.StatusBadRequest, gin.H{
-        //        "error": "foo",
-        //        "message": content, 
-        //    })
-        //} // end else err
-        //println(content)
-        ajson, _ := sjson.Set("", "app", "version")
-        ajson = `{
-                   "listeners": {
-                     "*:8080": {
-                             "pass": "applications/node"
-                     }
-                   },
-                   "applications": {
-                     "node": {}
-                   }
-                 }`
-        println(ajson)
-        fmt.Println(reflect.TypeOf(ajson).String())
-        c.JSON(http.StatusOK, gin.H{})
+
+        type myGidmap struct {
+          Host 		int `json:"host"`
+          Container 	int `json:"container"`
+          Size 		int `json:"size"`
+        }
+
+        type Gidmap struct {
+          Gidmap []myGidmap `json:"gidmap"`
+        }
+
+
+        templatefile, err := os.Open("./unit-configs/unit-template")
+        if err != nil {
+            //If there is an error reading the file
+            c.JSON(http.StatusBadRequest, gin.H{
+                "error": "TEMPLATEERR-1",
+                "message": err.Error(), 
+            })
+        } else {
+            //If there is no error in reading the file
+            content, _ := ioutil.ReadAll(templatefile)
+            println(content)
+            var config Gidmap
+            json.Unmarshal(content, &config)
+            c.JSON(http.StatusOK, gin.H{
+                "message": config, 
+            })
+        } // end else err
+
+        //sjson := `{
+        //           "listeners": {
+        //             "*:8080": {
+        //                     "pass": "applications/node"
+        //             }
+        //           },
+        //           "applications": {
+        //             "node": {
+        //               "type": "external",
+        //               "working_directory": "/app",
+        //               "executable": "/usr/bin/env",
+        //               "arguments": [
+        //                 "node",
+        //                 "--experimental-modules",
+        //                 "--loader",
+        //                 "unit-http/loader.mjs",
+        //                 "--require",
+        //                 "unit-http/loader",
+        //                 "index.js"
+        //               ],
+        //               "processes": {
+        //                 "max": 10,
+        //                 "spare": 5,
+        //                 "idle_timeout": 20
+        //               },
+        //               "isoloation": {
+        //                 "namespaces": {
+        //                   "cgroup": true,
+        //                   "credential": true,
+        //                   "mount": true,
+        //                   "network": true,
+        //                   "pid": true,
+        //                   "uname": true
+        //                 },
+        //                 "uidmap": [
+        //                   {
+        //                     "host": 65534, 
+        //                     "container": 0,
+        //                     "size": 200
+        //                   }
+        //                 ],
+        //                 "gidmap": [
+        //                   {
+        //                     "host": 65534,
+        //                     "container": 0,
+        //                     "size": 200
+        //                   }
+        //                 ]
+        //               }
+        //             }
+        //           }
+        //         }`
+        ////println(sjson)
+        //println("----------")
+        //fmt.Println(reflect.TypeOf(sjson).String())
+        //println("----------")
+        //c.JSON(http.StatusOK, gin.H{"message": config})
 }
 
 
