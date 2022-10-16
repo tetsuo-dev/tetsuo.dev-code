@@ -114,16 +114,41 @@ func newApp(c *gin.Context) {
         // need language type as a varible.
 
 
-        type myGidmap struct {
+        type GIDmap struct {
           Host 		int `json:"host"`
           Container 	int `json:"container"`
           Size 		int `json:"size"`
         }
 
-        type Gidmap struct {
-          Gidmap []myGidmap `json:"gidmap"`
+        type UIDmap struct {
+          Host 		int `json:"host"`
+          Container 	int `json:"container"`
+          Size 		int `json:"size"`
         }
 
+        type Namespaces struct {
+          Cgroup	bool	`json:"cgroup"`	
+          Credential	bool	`json:"credential"`
+          Mount		bool	`json:"mount"`
+          Network	bool	`json:"network"`
+          PID		bool	`json:"pid"`
+          Uname		bool	`json:"uname"`
+        }
+        type Processes struct {
+          Max		int	`json:"max"`
+          Spare		int	`json:"spare"`
+          Idle_timeout	int	`json:"idle_timeout"`
+        }
+
+        type Isolation struct {
+          Namespaces	*Namespaces	`json:"namespaces"`
+          Gidmap	*[]GIDmap	`json:"gidmap"`
+          Uidmap	*[]UIDmap	`json:"uidmap"`
+        }
+        type unitConfig struct {
+          Processes	*Processes	`json:"processes"`
+          Isolation	*Isolation	`json:"isolation"`
+        }
 
         templatefile, err := os.Open("./unit-configs/unit-template")
         if err != nil {
@@ -136,7 +161,7 @@ func newApp(c *gin.Context) {
             //If there is no error in reading the file
             content, _ := ioutil.ReadAll(templatefile)
             println(content)
-            var config Gidmap
+            var config unitConfig
             json.Unmarshal(content, &config)
             c.JSON(http.StatusOK, gin.H{
                 "message": config, 
