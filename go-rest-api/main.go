@@ -145,9 +145,15 @@ func newApp(c *gin.Context) {
           Gidmap	*[]GIDmap	`json:"gidmap"`
           Uidmap	*[]UIDmap	`json:"uidmap"`
         }
+        type Node struct {
+          Type			string		`json:"type"`
+          Working_directory	string		`json:"working_directory"`
+          Executable		string		`json:"executable"`
+          Processes     	*Processes      `json:"processes"`
+          Isolation     	*Isolation      `json:"isolation"`
+        }
         type unitConfig struct {
-          Processes	*Processes	`json:"processes"`
-          Isolation	*Isolation	`json:"isolation"`
+          Node		*Node		`json:"node"`
         }
 
         templatefile, err := os.Open("./unit-configs/unit-template")

@@ -1,31 +1,33 @@
 {
-  "processes": {
-    "max": 10,
-    "spare": 5,
-    "idle_timeout": 20
-  },
-  "isolation": {
-    "namespaces": {
-      "cgroup": true,
-      "credential": true,
-      "mount": true,
-      "network": true,
-      "pid": true,
-      "uname": true
+  "node": {
+    "processes": {
+      "max": 10,
+      "spare": 5,
+      "idle_timeout": 20
     },
-    "uidmap": [
-      {
-        "host": 65534,
-        "container": 0,
-        "size": 200
-      }
-    ],
-    "gidmap": [
-      {
-        "host": 65534,
-        "container": 0,
-        "size": 200
-      }
-    ]
+    "isolation": {
+      "namespaces": {
+        "cgroup": true,
+        "credential": true,
+        "mount": true,
+        "network": true,
+        "pid": true,
+        "uname": true
+      },
+      "uidmap": [
+        {
+          "host": 65534,
+          "container": 0,
+          "size": 200
+        }
+      ],
+      "gidmap": [
+        {
+          "host": 65534,
+          "container": 0,
+          "size": 200
+        }
+      ]
+    }
   }
 }
