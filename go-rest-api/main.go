@@ -15,6 +15,7 @@ import (
         _ "github.com/codecowboydotio/go-rest-api/docs"
         "unit.nginx.org/go"
         "encoding/json"
+        "github.com/tidwall/sjson"
 )
 
 
@@ -109,6 +110,16 @@ func gitPull(c *gin.Context) {
 
 }
 
+// @BasePath /api/v1
+// HealthCheck godoc
+// @Summary Generate a new app config to send to unit
+// @Description Generate a new app config to send to unit
+// @Tags root
+// @Accept json
+// @Produce json
+// @Param   branch body string true "Branch Name"
+// @Success 200 {object} map[string]interface{}
+// @Router /app [get]
 func newApp(c *gin.Context) {
         // Send new request to local unit that configures an app
         // need language type as a varible.
@@ -145,15 +156,22 @@ func newApp(c *gin.Context) {
           Gidmap	*[]GIDmap	`json:"gidmap"`
           Uidmap	*[]UIDmap	`json:"uidmap"`
         }
+        //type Arguments struct {
+        //  ghfjdkghdfkghfdkjlh
+        //}
         type Node struct {
           Type			string		`json:"type"`
           Working_directory	string		`json:"working_directory"`
           Executable		string		`json:"executable"`
+          //Arguments		*Arguments	`json:"arguments"`
           Processes     	*Processes      `json:"processes"`
           Isolation     	*Isolation      `json:"isolation"`
         }
-        type unitConfig struct {
+        type Applications struct {
           Node		*Node		`json:"node"`
+        }
+        type unitConfig struct {
+          Applications		*Applications		`json:"applications"`
         }
 
         templatefile, err := os.Open("./unit-configs/unit-template")
@@ -173,66 +191,25 @@ func newApp(c *gin.Context) {
                 "message": config, 
             })
         } // end else err
-
-        //sjson := `{
-        //           "listeners": {
-        //             "*:8080": {
-        //                     "pass": "applications/node"
-        //             }
-        //           },
-        //           "applications": {
-        //             "node": {
-        //               "type": "external",
-        //               "working_directory": "/app",
-        //               "executable": "/usr/bin/env",
-        //               "arguments": [
-        //                 "node",
-        //                 "--experimental-modules",
-        //                 "--loader",
-        //                 "unit-http/loader.mjs",
-        //                 "--require",
-        //                 "unit-http/loader",
-        //                 "index.js"
-        //               ],
-        //               "processes": {
-        //                 "max": 10,
-        //                 "spare": 5,
-        //                 "idle_timeout": 20
-        //               },
-        //               "isoloation": {
-        //                 "namespaces": {
-        //                   "cgroup": true,
-        //                   "credential": true,
-        //                   "mount": true,
-        //                   "network": true,
-        //                   "pid": true,
-        //                   "uname": true
-        //                 },
-        //                 "uidmap": [
-        //                   {
-        //                     "host": 65534, 
-        //                     "container": 0,
-        //                     "size": 200
-        //                   }
-        //                 ],
-        //                 "gidmap": [
-        //                   {
-        //                     "host": 65534,
-        //                     "container": 0,
-        //                     "size": 200
-        //                   }
-        //                 ]
-        //               }
-        //             }
-        //           }
-        //         }`
-        ////println(sjson)
-        //println("----------")
-        //fmt.Println(reflect.TypeOf(sjson).String())
-        //println("----------")
-        //c.JSON(http.StatusOK, gin.H{"message": config})
 }
 
+
+func genNode(c *gin.Context) {
+  const json = `{listeners: {"foo": {"pass":"foo"}}}`
+  value, _ := sjson.Set(json, "listeners.foo", "*:8081")
+  println(json)
+  println(value)
+
+  c.JSON(http.StatusOK, gin.H{
+    "message": value, 
+  })
+}
+
+func genPython(c *gin.Context) {
+            c.JSON(http.StatusOK, gin.H{
+                "message": "python", 
+            })
+}
 
 // @title Tetsuo GO Rest API Swagger
 // @version 1.0
@@ -247,6 +224,8 @@ func main() {
         router.GET("/", homeLink)
         router.POST("/pull", gitPull)
         router.GET("/app", newApp)
+        router.GET("/gen/node", genNode)
+        router.GET("/gen/python", genPython)
         router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
         unit.ListenAndServe(":8080", router)
