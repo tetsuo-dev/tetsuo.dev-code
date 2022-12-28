@@ -223,9 +223,9 @@ func main() {
 	router := gin.New()
         router.GET("/", homeLink)
         router.POST("/pull", gitPull)
-        router.GET("/app", newApp)
-        router.GET("/gen/node", genNode)
-        router.GET("/gen/python", genPython)
+        //router.GET("/app", newApp)
+        //router.GET("/gen/node", genNode)
+        //router.GET("/gen/python", genPython)
         router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
         unit.ListenAndServe(":8080", router)
