@@ -18,13 +18,21 @@ def config():
     print(result_data)
     data = request.get_json(force=True)
     name = data['name']
+    port = data['port']
+    w_dir = data['directory']
 
     f = open('unit-configs/foo')
   
-    # returns JSON object as 
-    # a dictionary
     data = json.load(f)
 
+    data['applications'][name] = data['applications'].pop('node')
+    data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
+    data['applications'][name]['working_directory']=w_dir
+    print(data['listeners'])
+    print(data['applications'][name]['working_directory'])
+    #for k, v in applications.items():
+    #  print(k)
+    #  print(v)
     return jsonify(data)
 
 @app.route('/info', methods=['GET'])
