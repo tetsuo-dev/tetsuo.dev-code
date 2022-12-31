@@ -34,6 +34,8 @@ def config():
     #  print(k)
     #  print(v)
     return jsonify(data)
+    payload = jsonify(data)
+    r = requests.post("http://127.0.0.1:8888/config", data=payload)
 
 @app.route('/info', methods=['GET'])
 @swag_from('info.yml')
