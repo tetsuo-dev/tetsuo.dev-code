@@ -34,7 +34,7 @@ def config():
     #  print(k)
     #  print(v)
     payload = jsonify(data)
-    r = requests.post("http://127.0.0.1:8888/config", data=payload)
+    r = request.post("http://127.0.0.1:8888/config", data=payload)
     return jsonify(data)
 
 @app.route('/info', methods=['GET'])
