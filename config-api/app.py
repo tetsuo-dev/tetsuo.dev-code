@@ -4,6 +4,8 @@ from flasgger.utils import swag_from, validate
 from jsonschema import ValidationError
 import json
 from pathlib import Path
+import requests
+
 
 app = Flask(__name__)
 swagger = Swagger(app)
@@ -34,7 +36,7 @@ def config():
     #  print(k)
     #  print(v)
     payload = jsonify(data)
-    r = request.post("http://127.0.0.1:8888/config", data=payload)
+    r = requests.post("http://127.0.0.1:8888/config", data=payload)
     return jsonify(data)
 
 @app.route('/info', methods=['GET'])
