@@ -7,6 +7,7 @@ from pathlib import Path
 import requests
 import os
 import subprocess
+import time
 
 
 app = Flask(__name__)
@@ -42,14 +43,15 @@ def config():
     subprocess.call(['/usr/bin/npm', 'install'])
     # update the application component
     url = "http://127.0.0.1:8888/config/applications/" + name
-    r = requests.put(url, json=data['applications'][name])
-    print(r.text)
+    app_r = requests.put(url, json=data['applications'][name])
+    print(app_r.text)
+    time.sleep(15)
     # update the listener
     url = "http://127.0.0.1:8888/config/listeners/" + "*:" + port
     print(url)
-    r = requests.put(url, json=data['listeners']['*:' + port])
-    print(r.text)
-    return r.content
+    listener_r = requests.put(url, json=data['listeners']['*:' + port])
+    print(listener_r.text)
+    return (app_r.content, listener_r.content)
 
 @app.route('/info', methods=['GET'])
 @swag_from('info.yml')
