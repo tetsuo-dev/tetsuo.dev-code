@@ -5,6 +5,8 @@ from jsonschema import ValidationError
 import json
 from pathlib import Path
 import requests
+import os
+import subprocess
 
 
 app = Flask(__name__)
@@ -36,6 +38,8 @@ def config():
     #  print(k)
     #  print(v)
     print(data)
+    os.chdir(w_dir)
+    subprocess.call(['/usr/bin/npm', 'install'])
     r = requests.put("http://127.0.0.1:8888/config", json=data)
     print(r.text)
     return r.content
