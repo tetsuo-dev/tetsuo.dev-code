@@ -8,6 +8,7 @@ import requests
 import os
 import subprocess
 import time
+from subprocess import PIPE, run
 
 
 app = Flask(__name__)
@@ -40,12 +41,15 @@ def config():
     #  print(v)
     print(data)
     os.chdir(w_dir)
-    subprocess.call(['/usr/bin/npm', 'install'])
+    result = subprocess.run(['/usr/bin/npm', 'install'], stdout=PIPE, stderr=PIPE, universal_newlines=True)
+    print(result.returncode, result.stdout, result.stderr)
+
     # update the application component
     url = "http://127.0.0.1:8888/config/applications/" + name
     app_r = requests.put(url, json=data['applications'][name])
     print(app_r.text)
     time.sleep(15)
+
     # update the listener
     url = "http://127.0.0.1:8888/config/listeners/" + "*:" + port
     print(url)
