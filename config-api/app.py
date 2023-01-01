@@ -40,7 +40,8 @@ def config():
     print(data)
     os.chdir(w_dir)
     subprocess.call(['/usr/bin/npm', 'install'])
-    r = requests.put("http://127.0.0.1:8888/config", json=data)
+    url = "http://127.0.0.1:8888/config/applications" + name
+    r = requests.put(url, json=data['applications'][name])
     print(r.text)
     return r.content
 
