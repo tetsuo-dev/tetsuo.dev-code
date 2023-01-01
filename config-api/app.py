@@ -40,8 +40,14 @@ def config():
     print(data)
     os.chdir(w_dir)
     subprocess.call(['/usr/bin/npm', 'install'])
-    url = "http://127.0.0.1:8888/config/applications" + name
+    # update the application component
+    url = "http://127.0.0.1:8888/config/applications/" + name
     r = requests.put(url, json=data['applications'][name])
+    print(r.text)
+    # update the listener
+    url = "http://127.0.0.1:8888/config/listeners/" + "*:" + port
+    print(url)
+    r = requests.put(url, json=data['listeners']['*:' + port])
     print(r.text)
     return r.content
 
