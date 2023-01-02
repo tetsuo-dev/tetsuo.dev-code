@@ -33,9 +33,6 @@ def config():
 
     logging.basicConfig(filename='/tmp/example.log', encoding='utf-8', level=logging.DEBUG)
     logging.debug('This message should go to the log file')
-    logging.info('So should this')
-    logging.warning('And this, too')
-    logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
 
     data['applications'][name] = data['applications'].pop('node')
     data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
@@ -44,9 +41,6 @@ def config():
     print("\n\n")
     print(data['applications'][name]['working_directory'])
     print("\n\n")
-    #for k, v in applications.items():
-    #  print(k)
-    #  print(v)
     print(data)
     isExist = os.path.exists(w_dir)
     if isExist == False:
@@ -56,6 +50,7 @@ def config():
     else:
       result = subprocess.run(['/usr/bin/npm', 'install'], capture_output=True, cwd=w_dir)
       print(result)
+      logging.info(result)
 
     # update the application component
     url = "http://127.0.0.1:8888/config/applications/" + name
