@@ -8,7 +8,7 @@ import requests
 import os
 import subprocess
 import time
-from subprocess import PIPE, run
+import logging
 
 
 app = Flask(__name__)
@@ -28,42 +28,57 @@ def config():
     w_dir = data['directory']
 
     f = open('unit-configs/foo')
-  
+
     data = json.load(f)
+
+    logging.basicConfig(filename='/tmp/example.log', encoding='utf-8', level=logging.DEBUG)
+    logging.debug('This message should go to the log file')
+    logging.info('So should this')
+    logging.warning('And this, too')
+    logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
 
     data['applications'][name] = data['applications'].pop('node')
     data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
     data['applications'][name]['working_directory']=w_dir
     print(data['listeners'])
+    print("\n\n")
     print(data['applications'][name]['working_directory'])
+    print("\n\n")
     #for k, v in applications.items():
     #  print(k)
     #  print(v)
     print(data)
-    os.chdir(w_dir)
-    result = subprocess.run(['/usr/bin/npm', 'install'], stdout=PIPE, stderr=PIPE, universal_newlines=True)
-    print(result.returncode, result.stdout, result.stderr)
+    isExist = os.path.exists(w_dir)
+    if isExist == False:
+      print(isExist)
+      message = {"ERROR": "Directory does not exist"}
+      return jsonify(message)
+    else:
+      result = subprocess.run(['/usr/bin/npm', 'install'], capture_output=True, cwd=w_dir)
+      print(result)
 
     # update the application component
     url = "http://127.0.0.1:8888/config/applications/" + name
     app_r = requests.put(url, json=data['applications'][name])
     print(app_r.text)
-    time.sleep(15)
+    #time.sleep(15)
 
     # update the listener
     url = "http://127.0.0.1:8888/config/listeners/" + "*:" + port
     print(url)
     listener_r = requests.put(url, json=data['listeners']['*:' + port])
     print(listener_r.text)
-    return (app_r.content, listener_r.content)
+    #return (app_r.content, listener_r.content)
+    return (app_r.content)
 
 @app.route('/info', methods=['GET'])
 @swag_from('info.yml')
 def info():
     msg = 'This is the API that you see'
     api_ver = '1.0'
-    
+
     return jsonify(status=msg, version=api_ver)
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
+
