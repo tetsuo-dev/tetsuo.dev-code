@@ -31,17 +31,15 @@ def config():
 
     data = json.load(f)
 
-    logging.basicConfig(filename='/tmp/example.log', encoding='utf-8', level=logging.DEBUG)
-    logging.debug('This message should go to the log file')
+    logging.basicConfig(filename='/tmp/tetsuo.log', encoding='utf-8', level=logging.DEBUG)
 
     data['applications'][name] = data['applications'].pop('node')
     data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
     data['applications'][name]['working_directory']=w_dir
-    print(data['listeners'])
-    print("\n\n")
-    print(data['applications'][name]['working_directory'])
-    print("\n\n")
-    print(data)
+    logging.info("**************************************")
+    logging.info(data['listeners'])
+    logging.info(data['applications'][name]['working_directory'])
+    logging.info(data)
     isExist = os.path.exists(w_dir)
     if isExist == False:
       print(isExist)
@@ -49,20 +47,19 @@ def config():
       return jsonify(message)
     else:
       result = subprocess.run(['/usr/bin/npm', 'install'], capture_output=True, cwd=w_dir)
-      print(result)
       logging.info(result)
 
     # update the application component
     url = "http://127.0.0.1:8888/config/applications/" + name
     app_r = requests.put(url, json=data['applications'][name])
-    print(app_r.text)
+    logging.info(app_r.text)
     #time.sleep(15)
 
     # update the listener
     url = "http://127.0.0.1:8888/config/listeners/" + "*:" + port
-    print(url)
+    logging.info(url)
     listener_r = requests.put(url, json=data['listeners']['*:' + port])
-    print(listener_r.text)
+    logging.info(listener_r.text)
     #return (app_r.content, listener_r.content)
     return (app_r.content)
 
