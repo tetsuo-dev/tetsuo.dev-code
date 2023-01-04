@@ -48,6 +48,8 @@ def config():
     else:
       result = subprocess.run(['/usr/bin/npm', 'install'], capture_output=True, cwd=w_dir)
       logging.info(result)
+      unit_module = subprocess.run(['/usr/bin/npm', 'install', 'unit-http'], capture_output=True, cwd=w_dir)
+      logging.info(unit_module)
 
     # update the application component
     url = "http://127.0.0.1:8888/config/applications/" + name
