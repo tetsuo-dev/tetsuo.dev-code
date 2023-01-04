@@ -65,6 +65,7 @@ func gitPull(c *gin.Context) {
                w, err := r.Worktree() 
                pull := w.Pull(&git.PullOptions{
                  RemoteName: "origin",
+                 Force: true,
                  ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", json.Branch)),
                })
                fmt.Printf("pull: %s\n", pull)
