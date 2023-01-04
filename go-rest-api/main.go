@@ -4,7 +4,6 @@ import (
 	"fmt"
         "os"
         "path"
-        "io/ioutil"
 	"net/http"
         "net/url"
         "github.com/gin-gonic/gin"
@@ -14,8 +13,6 @@ import (
         "github.com/swaggo/gin-swagger"
         _ "github.com/codecowboydotio/go-rest-api/docs"
         "unit.nginx.org/go"
-        "encoding/json"
-        "github.com/tidwall/sjson"
 )
 
 
@@ -111,107 +108,6 @@ func gitPull(c *gin.Context) {
 
 }
 
-// @BasePath /api/v1
-// HealthCheck godoc
-// @Summary Generate a new app config to send to unit
-// @Description Generate a new app config to send to unit
-// @Tags root
-// @Accept json
-// @Produce json
-// @Param   branch body string true "Branch Name"
-// @Success 200 {object} map[string]interface{}
-// @Router /app [get]
-func newApp(c *gin.Context) {
-        // Send new request to local unit that configures an app
-        // need language type as a varible.
-
-
-        type GIDmap struct {
-          Host 		int `json:"host"`
-          Container 	int `json:"container"`
-          Size 		int `json:"size"`
-        }
-
-        type UIDmap struct {
-          Host 		int `json:"host"`
-          Container 	int `json:"container"`
-          Size 		int `json:"size"`
-        }
-
-        type Namespaces struct {
-          Cgroup	bool	`json:"cgroup"`	
-          Credential	bool	`json:"credential"`
-          Mount		bool	`json:"mount"`
-          Network	bool	`json:"network"`
-          PID		bool	`json:"pid"`
-          Uname		bool	`json:"uname"`
-        }
-        type Processes struct {
-          Max		int	`json:"max"`
-          Spare		int	`json:"spare"`
-          Idle_timeout	int	`json:"idle_timeout"`
-        }
-
-        type Isolation struct {
-          Namespaces	*Namespaces	`json:"namespaces"`
-          Gidmap	*[]GIDmap	`json:"gidmap"`
-          Uidmap	*[]UIDmap	`json:"uidmap"`
-        }
-        //type Arguments struct {
-        //  ghfjdkghdfkghfdkjlh
-        //}
-        type Node struct {
-          Type			string		`json:"type"`
-          Working_directory	string		`json:"working_directory"`
-          Executable		string		`json:"executable"`
-          //Arguments		*Arguments	`json:"arguments"`
-          Processes     	*Processes      `json:"processes"`
-          Isolation     	*Isolation      `json:"isolation"`
-        }
-        type Applications struct {
-          Node		*Node		`json:"node"`
-        }
-        type unitConfig struct {
-          Applications		*Applications		`json:"applications"`
-        }
-
-        templatefile, err := os.Open("./unit-configs/unit-template")
-        if err != nil {
-            //If there is an error reading the file
-            c.JSON(http.StatusBadRequest, gin.H{
-                "error": "TEMPLATEERR-1",
-                "message": err.Error(), 
-            })
-        } else {
-            //If there is no error in reading the file
-            content, _ := ioutil.ReadAll(templatefile)
-            println(content)
-            var config unitConfig
-            json.Unmarshal(content, &config)
-            c.JSON(http.StatusOK, gin.H{
-                "message": config, 
-            })
-        } // end else err
-}
-
-
-func genNode(c *gin.Context) {
-  const json = `{listeners: {"foo": {"pass":"foo"}}}`
-  value, _ := sjson.Set(json, "listeners.foo", "*:8081")
-  println(json)
-  println(value)
-
-  c.JSON(http.StatusOK, gin.H{
-    "message": value, 
-  })
-}
-
-func genPython(c *gin.Context) {
-            c.JSON(http.StatusOK, gin.H{
-                "message": "python", 
-            })
-}
-
 // @title Tetsuo GO Rest API Swagger
 // @version 1.0
 // @description Swagger API for Tetsuo Golang Project for git rest api
@@ -224,9 +120,6 @@ func main() {
 	router := gin.New()
         router.GET("/", homeLink)
         router.POST("/pull", gitPull)
-        //router.GET("/app", newApp)
-        //router.GET("/gen/node", genNode)
-        //router.GET("/gen/python", genPython)
         router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
         unit.ListenAndServe(":8080", router)
