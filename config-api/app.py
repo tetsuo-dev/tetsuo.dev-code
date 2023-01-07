@@ -46,9 +46,9 @@ def config():
       message = {"ERROR": "Directory does not exist"}
       return jsonify(message)
     else:
-      result = subprocess.run(['/usr/bin/npm', 'install'], capture_output=True, cwd=w_dir)
+      result = subprocess.run(['/usr/bin/npm', 'install'], capture_output=True, cwd=w_dir, user=unit)
       logging.info(result)
-      unit_module = subprocess.run(['/usr/bin/npm', 'install', 'unit-http'], capture_output=True, cwd=w_dir)
+      unit_module = subprocess.run(['/usr/bin/npm', 'install', 'unit-http'], capture_output=True, cwd=w_dir, user=unit)
       logging.info(unit_module)
 
     # update the application component
