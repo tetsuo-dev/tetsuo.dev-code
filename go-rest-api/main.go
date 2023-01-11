@@ -58,6 +58,7 @@ func gitPull(c *gin.Context) {
            //At this point, if there is something in the repository it means it has been cloned before
            //We should do a pull to update it rather than a clone.
              if err.Error() == "repository already exists" {
+             // need additional check for local changes where we should do a force pull.
                r, err := git.PlainOpen("/apps/" + path.Base(targetUrl.Path))
                w, err := r.Worktree() 
                pull := w.Pull(&git.PullOptions{

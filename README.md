@@ -28,8 +28,12 @@ This made us think about what other components we would need to make this a real
 
 ## Where are we at?
 
-With this release 0.1 we have a functioning git API.
-We are working on another API to push configuration into UNIT.
+With this release 0.4 we have a functioning git API.
+We also have a working opinionated configuration API. This will **generate** and apply a new configuration to the unit server, but will ensure that the configuration is successfully applied. 
+
+The intention is two more things here:
+1) Merge both of these API calls into a single call.
+2) Provide a User Interface :)
 
 I also have a terraform build in AWS of a unit server that deploys the API. 
 This will be added shortly.
