@@ -17,11 +17,27 @@ swagger = Swagger(app)
 @app.route ('/')
 def root():
     return redirect("/apidocs", code=302)
-@app.route('/app', methods=['POST'])
+@app.route('/app', methods=['GET', 'POST', 'DELETE'])
 @swag_from('app.yml')
 def config():
     result_data = request.get_data()
+    method = request.method
     print(result_data)
+    print(method)
+
+    if method == 'GET':
+      print("received get")
+      # perform get of unit config
+      # list out apps and ports 
+      message = {"message": "GET RECEIVED"}
+      return jsonify(message)
+    if method == 'DELETE':
+      print("received delete")
+      # send delete for listener then the app
+      # get all listeners and search for app 
+      
+      message = {"message": "DELETE RECEIVED"}
+      return jsonify(message)
     data = request.get_json(force=True)
     name = data['name']
     port = data['port']
@@ -68,7 +84,7 @@ def config():
 @app.route('/info', methods=['GET'])
 @swag_from('info.yml')
 def info():
-    msg = 'This is the API that you see'
+    msg = 'Tetsuo application deployment API'
     api_ver = '1.0'
 
     return jsonify(status=msg, version=api_ver)

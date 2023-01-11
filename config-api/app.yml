@@ -1,30 +1,32 @@
-Example git pull API for unit (works outside of unit actually).
-Pull API to retrieve git repo ready to use on the system that the API runs on.
+title: Tetsuo
+Tetsuo application deployment API.
+This API deploys an application to Tetsuo.
+The directives map to application objects within NGINX Unit, along with an opinionated deployment configuration.
 ---
 parameters:
   - in: body
-    description: The data to send to the API. This data is json format, and describes the source repository, the destination on disk, and the branch that you want to API to perform a pull from.
+    description: The data to send to the API. This data is json format, and describes the application deployment. These map directly to the unit confiugration directives of application name, listener and working directory
     schema:
       type: object
       required:
-        - repo
-        - dest
-        - branch
+        - name
+        - port
+        - directory
       properties:
-       repo: 
+       name: 
          type: string 
-         example: http://github.com/codecowboydotio/git-pull-api/
-       dest: 
+         example: swapi-json-server
+       port: 
          type: string 
-         example: /www/fooble
-       branch: 
+         example: 80
+       directory: 
          type: string 
-         example: main
+         example: /apps/swapi-json-server
 responses:
   500:
     description: Something went very wrong
   200:
-    description: Return the repo, branch and destination
+    description: Return whether or not the request was successful
     schema:
       properties:
         repo:
