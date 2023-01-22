@@ -1,0 +1,45 @@
+{
+        "listeners": {
+                "*:8080": {
+                        "pass": "routes"
+                },
+
+                "*:8181": {
+                        "pass": "applications/config-app"
+                }
+        },
+
+        "routes": [
+           {
+             "match": {
+                 "uri": "/ui*",
+                 },
+             "action": {
+                     "share": "/apps/project-tetsuo/ui/index.html"
+             },
+           },
+        ],
+
+        "applications": {
+                "tetsuo": {
+                        "type": "external",
+                        "working_directory": "/apps/project-tetsuo/go-rest-api",
+                        "executable": "/apps/project-tetsuo/go-rest-api/go-rest-api",
+                        "user": "unit",
+                        "group": "unit",
+                        "environment": {
+                                "version": "2.0",
+                                "git_repo": "https://github.com/codecowboydotio/git-pull-api"
+                        }
+                },
+
+                "config-app": {
+                        "type": "python",
+                        "path": "/apps/project-tetsuo/config-api",
+                        "working_directory": "/apps/project-tetsuo/config-api",
+                        "module": "wsgi",
+                        "callable": "app"
+                }
+        }
+}
+
