@@ -24,41 +24,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/app": {
-            "get": {
-                "description": "Generate a new app config to send to unit",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "root"
-                ],
-                "summary": "Generate a new app config to send to unit",
-                "parameters": [
-                    {
-                        "description": "Branch Name",
-                        "name": "branch",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
         "/pull": {
             "post": {
                 "description": "Pull a github repository down.",

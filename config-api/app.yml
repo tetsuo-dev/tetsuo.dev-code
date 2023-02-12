@@ -1,7 +1,6 @@
-title: Tetsuo
-Tetsuo application deployment API.
-This API deploys an application to Tetsuo.
-The directives map to application objects within NGINX Unit, along with an opinionated deployment configuration.
+info:
+  version 0.1
+  title: Tetsuo Configuration API
 ---
 parameters:
   - in: body

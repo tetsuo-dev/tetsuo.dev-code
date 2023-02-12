@@ -10,29 +10,6 @@ info:
   title: Tetsuo GO Rest API Swagger
   version: "1.0"
 paths:
-  /app:
-    get:
-      consumes:
-      - application/json
-      description: Generate a new app config to send to unit
-      parameters:
-      - description: Branch Name
-        in: body
-        name: branch
-        required: true
-        schema:
-          type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Generate a new app config to send to unit
-      tags:
-      - root
   /pull:
     post:
       consumes:
