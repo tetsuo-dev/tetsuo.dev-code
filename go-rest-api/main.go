@@ -119,12 +119,8 @@ func gitPull(c *gin.Context) {
 // @license.name MIT
 // @license.url https://github.com/codecowboydotio/go-rest-api/blob/main/LICENSE
 func main() {
-	router := gin.New()
-        //router.Use(cors.Default())
-        router.Use(cors.New(cors.Config{
-          AllowOrigins:		[]string{"*"},
-          AllowHeaders:		[]string{"Origin"},
-        }))
+	router := gin.Default()
+        router.Use(cors.Default())
         router.GET("/", homeLink)
         router.POST("/pull", gitPull)
         router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
