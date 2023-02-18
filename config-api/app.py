@@ -9,9 +9,11 @@ import os
 import subprocess
 import time
 import logging
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 swagger = Swagger(app)
 
 @app.route ('/')
