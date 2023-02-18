@@ -20,6 +20,7 @@
             <p>Tetsuo Application Deployment Details</p>
           </div>
           <div class="card-section">
+            <v-text-field class="label-left" label="App Name" v-model="appname"></v-text-field>
             <v-text-field class="label-left" label="Git Repository URL" v-model="repourl"></v-text-field>
             <v-text-field class="label-left" label="Branch" v-model="branch"></v-text-field>
             <v-btn type="submit" @click="submit">Submit</v-btn>
@@ -49,22 +50,28 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script>
-      const url = "http://www.svkcode.org:8080/pull"
+      const git_url = "http://www.svkcode.org:8080/pull"
+      const app_url = "http://www.svkcode.org:8181/app"
       const goo = new Vue({
          el: '#git-post',
-         data: {
-           counter: 0,
-           splitpercent: ''
-         },
          methods: {
            submit(){
              const git_data = {
                url: this.repourl,
                branch: this.branch
              }
-             axios.post(url, git_data)
+             const app_data = {
+               name: this.name,
+               port: this.port,
+               directory: "/apps/" + this.name
+             }
+             axios.post(git_url, git_data)
                .then((response) => {
                  console.log(response)
+                 axios.post(app_url, app_data)
+                   .then((response) => {
+                     console.log(response)
+                 })
                })
            } //end of submit
          } //end of methods
