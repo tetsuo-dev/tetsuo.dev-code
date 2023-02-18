@@ -55,6 +55,9 @@
       const app_url = "http://www.svkcode.org:8181/app"
       const goo = new Vue({
          el: '#git-post',
+         data: {
+           is_loading: false,
+         },
          methods: {
            submit(){
              const git_data = {
@@ -64,8 +67,9 @@
              const app_data = {
                name: this.appname,
                port: this.apport,
-               directory: "/apps/" + this.name
+               directory: "/apps/" + this.appname
              }
+             is_loading = true;
              axios.post(git_url, git_data)
                .then((response) => {
                  console.log(response)
@@ -73,6 +77,9 @@
                    .then((response) => {
                      console.log(response)
                  })
+                .finally(() => {
+                   is_loading = false;
+                })
                })
            } //end of submit
          } //end of methods
@@ -80,4 +87,3 @@
     </script>
   </body>
 </html>
-
