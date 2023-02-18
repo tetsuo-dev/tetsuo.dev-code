@@ -1,16 +1,100 @@
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Tetsuo Deployment</title>
+</head>
 
-<div id="app">{{ message }}</div>
+  <body>
+    <div class="container" id="app-state">
+      <h3 class="text-center">Tetsuo Deployment</h3>
+      <div class="columns medium-4" v-for="(result, index) in results">
+        <div v-if="index" class="card">
+          <div class="card-section">
+            <p> NGINX: {{ index }} </p>
+          </div>
+          <div class="card-divider">
+            <p>Application A: {{ 100 - result }}%</p>
+          </div>
+          <div class="card-divider">
+            <p>Application B: {{ result }}%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" id="git-post">
+      <div class="columns medium-4">
+        <div class="card">
+          <div class="card-section">
+            <p>Tetsuo Application Deployment Details</p>
+          </div>
+          <div class="card-section">
+            <v-text-field class="label-left" label="Git Repository URL" v-model="branch"></v-text-field>
+            <v-text-field class="label-left" label="Branch" v-model="branch"></v-text-field>
+            <v-btn type="submit" @click="submit">Submit</v-btn>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<script>
-  const { createApp } = Vue
+<div>
+  <div class="text-center">
+    <v-progress-circular
+      :value="100"
+      color="blue-grey"
+    ></v-progress-circular>
+</div>
+<style scoped>
+.v-progress-circular {
+  margin: 1rem;
+}
+.label-left .v-label {
+  left: 0 !important;
+  transform-origin: top left !important;
+}
+</style>
 
-  createApp({
-    data() {
-      return {
-        message: 'Hello Vue!'
-      }
-    }
-  }).mount('#app')
-</script>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+      const url = "http://www.svkcode.org:8080/pull"
+      const state = new Vue({
+              el: '#app-state',
+              data () {
+                return {
+                  results: null,
+                }
+              },
+              mounted() {
+                axios.get("http://www.svkcode.org:8888/config").then(response => {
+                  this.results = response.data
+                })
+              }
+            }); //end state vue
+      const goo = new Vue({
+         el: '#git-post',
+         data: {
+           counter: 0,
+           splitpercent: ''
+         },
+         methods: {
+           submit(){
+             const git_data = {
+               url: this.repourl,
+               branch: this.branch
+             }
+             axios.post(url, git_data)
+               .then((response) => {
+                 console.log(response)
+               })
+           } //end of submit
+         } //end of methods
+      }); // end of Vue
+    </script>
+  </body>
+</html>
