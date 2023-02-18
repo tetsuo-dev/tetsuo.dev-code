@@ -12,19 +12,6 @@
   <body>
     <div class="container" id="app-state">
       <h3 class="text-center">Tetsuo Deployment</h3>
-      <div class="columns medium-4" v-for="(result, index) in results">
-        <div v-if="index" class="card">
-          <div class="card-section">
-            <p> NGINX: {{ index }} </p>
-          </div>
-          <div class="card-divider">
-            <p>Application A: {{ 100 - result }}%</p>
-          </div>
-          <div class="card-divider">
-            <p>Application B: {{ result }}%</p>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="container" id="git-post">
       <div class="columns medium-4">
@@ -33,7 +20,7 @@
             <p>Tetsuo Application Deployment Details</p>
           </div>
           <div class="card-section">
-            <v-text-field class="label-left" label="Git Repository URL" v-model="branch"></v-text-field>
+            <v-text-field class="label-left" label="Git Repository URL" v-model="repourl"></v-text-field>
             <v-text-field class="label-left" label="Branch" v-model="branch"></v-text-field>
             <v-btn type="submit" @click="submit">Submit</v-btn>
           </div>
@@ -63,19 +50,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script>
       const url = "http://www.svkcode.org:8080/pull"
-      const state = new Vue({
-              el: '#app-state',
-              data () {
-                return {
-                  results: null,
-                }
-              },
-              mounted() {
-                axios.get("http://www.svkcode.org:8888/config").then(response => {
-                  this.results = response.data
-                })
-              }
-            }); //end state vue
       const goo = new Vue({
          el: '#git-post',
          data: {
@@ -98,3 +72,4 @@
     </script>
   </body>
 </html>
+
