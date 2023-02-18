@@ -11,6 +11,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
         swaggerFiles "github.com/swaggo/files"
         "github.com/swaggo/gin-swagger"
+        "github.com/gin-contrib/cors"
         _ "github.com/codecowboydotio/go-rest-api/docs"
         "unit.nginx.org/go"
 )
@@ -119,6 +120,11 @@ func gitPull(c *gin.Context) {
 // @license.url https://github.com/codecowboydotio/go-rest-api/blob/main/LICENSE
 func main() {
 	router := gin.New()
+        //router.Use(cors.Default())
+        router.Use(cors.New(cors.Config{
+          AllowOrigins:		[]string{"*"},
+          AllowHeaders:		[]string{"Origin"},
+        }))
         router.GET("/", homeLink)
         router.POST("/pull", gitPull)
         router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
