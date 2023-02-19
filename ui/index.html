@@ -28,6 +28,7 @@
           </div>
         </div>
       </div>
+      <v-progress-circular indeterminate color="purple" :size="128" :width="12" v-if="is_loading"></v-progress-circular>
     </div>
 
 <div>
@@ -59,31 +60,33 @@
            is_loading: false,
          },
          methods: {
-           submit(){
-             const git_data = {
-               url: this.repourl,
-               branch: this.branch
-             }
-             const app_data = {
-               name: this.appname,
-               port: this.apport,
-               directory: "/apps/" + this.appname
-             }
-             is_loading = true;
-             axios.post(git_url, git_data)
-               .then((response) => {
-                 console.log(response)
-                 axios.post(app_url, app_data)
+           async submit(){
+                 this.is_loading = true;
+                 const git_data = {
+                   url: this.repourl,
+                   branch: this.branch
+                 }
+                 const app_data = {
+                   name: this.appname,
+                   port: this.apport,
+                   directory: "/apps/" + this.appname
+                 }
+                 await axios.post(git_url, git_data)
                    .then((response) => {
                      console.log(response)
-                 })
-                .finally(() => {
-                   is_loading = false;
-                })
-               })
-           } //end of submit
+                     axios.post(app_url, app_data)
+                       .then((app_response) => {
+                         console.log(app_response)
+                       })
+                       .finally(() => {
+                         this.is_loading = false;
+                       })
+                   })
+
+               } //end of submit
          } //end of methods
       }); // end of Vue
     </script>
   </body>
 </html>
+
