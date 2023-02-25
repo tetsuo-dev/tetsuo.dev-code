@@ -20,7 +20,7 @@ swagger = Swagger(app)
 def root():
     return redirect("/apidocs", code=302)
 @app.route('/app', methods=['GET', 'POST', 'DELETE'])
-@swag_from('app2.yml')
+@swag_from('app.yml')
 def config():
     result_data = request.get_data()
     method = request.method

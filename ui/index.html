@@ -60,6 +60,10 @@
            is_loading: false,
          },
          methods: {
+           async created() {
+           	this.db = await this.getDb();
+           	this.ready = true;
+           },
            async submit(){
                  this.is_loading = true;
                  const git_data = {
