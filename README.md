@@ -2,6 +2,8 @@
 
 Project Tetsuo <https://tetsuo.dev>
 
+## Project Members
+
 Project Lead, Developer Relations: [Scott Van Kalken](https://github.com/codecowboydotio)
 
 Project Admin, Security Lead: [Shain Singh](https://github.com/shsingh)
@@ -21,7 +23,7 @@ Refer to [MANIFESTO.md](MANIFESTO.md)
 
 - Provide feedback and report potential bugs
 - Suggest enhancements to the project
-- Fix a [Bug](https://github.com/tetso-dev/tetsuo.dev-code/issues?q=is%3Aopen+is%3Aissue+label%3Abug) or implement an
+- Fix a [Bug](https://github.com/tetsuo-dev/tetsuo.dev-code/issues?q=is%3Aopen+is%3Aissue+label%3Abug) or implement an
 [Enhancement](https://github.com/tetsuo-dev/tetsuo.dev-code/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
 
 Refer to [CONTRIBUTING.md](CONTRIBUTING.md) and our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for further information.
