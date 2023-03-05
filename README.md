@@ -5,8 +5,8 @@ Project Tetsuo <https://tetsuo.dev>
 ## Communication
 
 - [Slack](https://join.slack.com/t/project-tetsuo/shared_invite/zt-1qjawx33o-dtwPtoSlFzAqZcpeHReaBA) #general
-- [Github Discussions](https://github.com/tetsuo-dev/tetsuo.dev-code)
-- [Monthly Meeting](https://github.com/tetsuo-dev/tetsuo.dev-code?q=label%3Ameeting+)
+- [Github Discussions](https://github.com/tetsuo-dev/tetsuo.dev-code/issues)
+- [Meeting Notes](https://github.com/tetsuo-dev/tetsuo.dev-code/issues?q=label%3Ameeting+)
 - [Planning](https://github.com/tetsuo-dev/tetsuo.dev-code/projects?type=beta)
 
 ## Contributions
