@@ -3,6 +3,7 @@
 Project Tetsuo <https://tetsuo.dev>
 
 Project Lead, Developer Relations: [Scott Van Kalken](https://github.com/codecowboydotio)
+
 Project Admin, Security Lead: [Shain Singh](https://github.com/shsingh)
 
 ## Project Details
