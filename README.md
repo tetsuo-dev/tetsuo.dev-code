@@ -1,53 +1,28 @@
-# project-tetsuo: deploy code not containers
+## Project Name
 
-Release 0.1
+Project Tetsuo <https://tetsuo.dev>
 
-## What is this?
-Welcome to tetsuo.
+## Communication
 
-Tetsuo is the brain child of some people who recognise that the future is code not containers. 
+- [Slack](https://join.slack.com/t/project-tetsuo/shared_invite/zt-1qjawx33o-dtwPtoSlFzAqZcpeHReaBA) #general
+- [Github Discussions](https://github.com/tetsuo-dev/tetsuo.dev-code)
+- [Monthly Meeting](https://github.com/tetsuo-dev/tetsuo.dev-code?q=label%3Ameeting+)
+- [Planning](https://github.com/tetsuo-dev/tetsuo.dev-code/projects?type=beta)
 
-To this end, we have written a facade API on top of NGINX unit to pull down arbitrary code from github onto a unit server. 
+## Contributions
 
-This is the first step in making a serverless platform that will eventually do the following things:
+- Provide feedback and report potential bugs
+- Suggest enhancements to the project
+- Fix a [Bug](https://github.com/tetso-dev/tetsuo.dev-code?q=is%3Aopen+is%3Aissue+label%3Abug) or implement an
+[Enhancement](https://github.com/tetsuo-dev/tetsuo.dev-code/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
 
-- Pull code from a git repo
-- Automatically update NGINX unit configuration
-- Apply the same codebase and configuration update to other unit servers as part of a cluster (probably using libp2p)
+Project Lead, Developer Relations: [Scott Van Kalken](https://github.com/codecowboydotio)
+Project Admin, Security Lead: [Shain Singh](https://github.com/shsingh)
 
+## Project Details
 
-## Why Bother?
+Refer to [MANIFESTO.md](MANIFESTO.md)
 
-This is a good question. One of the drawbacks that I see with the curreent approach to serverless is that I need to refactor my code to enable it to work with most serverless platforms. This usually involves refactoring or wrapping my code in some sort of eventing model or making other changes to suit the proprietary serverless model.
+## Contributing
 
-When we first came across NGINX UNIT, we saw that the changes to code needed we minimal to none. Nothing to learn.
-
-This made us think about what other components we would need to make this a reality.
-
-....and Tetsuo was born.
-
-## Where are we at?
-
-With this release 0.4 we have a functioning git API.
-We also have a working opinionated configuration API. This will **generate** and apply a new configuration to the unit server, but will ensure that the configuration is successfully applied. 
-
-The intention is two more things here:
-1) Merge both of these API calls into a single call.
-2) Provide a User Interface :)
-
-I also have a terraform build in AWS of a unit server that deploys the API. 
-This will be added shortly.
-
-## DEVELOPERS NEEDED!!!!!!!!
-
-admins: 
-- [@codecowboydotio](https://github.com/codecowboydotio) 
-- [@shsingh](https://github.com/shsingh)
-
-
-
-slack: https://join.slack.com/t/project-tetsuo/shared_invite/zt-11udr5vev-I7o0yEMXttlyK6B__MUXeg
-
-discord: https://discord.gg/dkHbP7PW
-
-Also check out this: https://codecowboy.io/development/libp2p/ on the beginnings of a distributed control plane.
+Refer to [CONTRIBUTING.md](CONTRIBUTING.md) and our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
