@@ -13,6 +13,10 @@ and orientation.
 We pledge to act and interact in ways that contribute to an open, welcoming,
 diverse, inclusive, and healthy community.
 
+## Sign our code of conduct
+
+You can sign our code of conduct by adding your name to the document [CODE_OF_CONDUCT_SIGNATORIES.md](./CODE_OF_CONDUCT_SIGNATORIES.md) and doing a signed commit of the file.
+
 ## Our Standards
 
 Examples of behavior that contributes to a positive environment for our
