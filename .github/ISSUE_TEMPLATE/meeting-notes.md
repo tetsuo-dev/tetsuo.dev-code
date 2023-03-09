@@ -1,4 +1,11 @@
-# tetsuo.dev - Meeting Notes Template
+---
+name: Meeting Notes
+about: Meeting Notes
+title: ''
+labels: 'meeting'
+assignees: ''
+
+---
 
 ## Date:
 
