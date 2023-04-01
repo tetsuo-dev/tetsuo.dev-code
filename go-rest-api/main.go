@@ -72,8 +72,8 @@ func gitPull(c *gin.Context) {
                  ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", json.Branch)),
                })
                fmt.Printf("localref: %s\n", localRef)
-               fmt.Printf("remotes: %s\n", remotes)
                fmt.Printf("remoteref: %s\n", remoteRef)
+               fmt.Printf("remotes: %s\n", remotes)
                fmt.Printf("pull: %s\n", pull)
                fmt.Printf("pull: %T\n", pull)
                if pull == nil { 
@@ -87,6 +87,8 @@ func gitPull(c *gin.Context) {
                  fmt.Printf("git pull not equal nil")
                  c.JSON(http.StatusOK, gin.H{
                        "message": pull.Error(),
+                       "remoteref": remoteRef,
+                       "localref": localRef,
                        "repository": json.Url,
                        "branch": json.Branch})
                  return
