@@ -89,13 +89,13 @@ def config():
       #return (app_r.content, listener_r.content)
       return (app_r.content)
 
-@app  .route('/info', methods=['GET'])
-@swa  g_from('info.yml')
-def   info():
-      msg = 'Tetsuo application deployment API'
-      api_ver = '1.0'
+@app.route('/info', methods=['GET'])
+@swag_from('info.yml')
+def info():
+    msg = 'Tetsuo application deployment API'
+    api_ver = '1.0'
 
-      return jsonify(status=msg, version=api_ver)
+    return jsonify(status=msg, version=api_ver)
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
