@@ -38,11 +38,13 @@ func gitPull(c *gin.Context) {
         // if it exists just do a pull
         // otherwise do a clone
         //var json  struct - should be externalised as part of model
-        json := struct { 
+//        json := struct { 
         // We don't need a destination here as we will be using a standardised destination on the server
-            Url string `json:"url" binding:"required"`
-            Branch string `json:"branch" binding:"required"`
-        }{}
+//            Url string `json:"url" binding:"required"`
+//            Branch string `json:"branch" binding:"required"`
+//        }{}
+
+        var json []models.Tetsuo-git
 
 
         if err := c.BindJSON(&json); err == nil {
