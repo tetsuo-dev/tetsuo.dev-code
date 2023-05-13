@@ -14,6 +14,7 @@ import (
         "github.com/gin-contrib/cors"
         _ "github.com/codecowboydotio/go-rest-api/docs"
         "unit.nginx.org/go"
+        "github.com/tetsuo-dev/tetsuo.dev-code/tree/rel-0.7/go-rest-api/models"
 )
 
 
