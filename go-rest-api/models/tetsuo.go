@@ -1,4 +1,4 @@
-package Tetsuo-git
+package models
 
 type json struct {
   Url 		string `json:"url" binding:"required"`
