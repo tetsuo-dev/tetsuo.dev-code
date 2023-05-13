@@ -28,8 +28,9 @@ func homeLink(c *gin.Context) {
 // @Description Pull a github repository down.
 // @Tags root
 // @Accept json
+// @Param branch body string true "Branch Name"
+// @Param Url body string true "Git URL"
 // @Produce json
-// @Param   branch body string true "Branch Name"
 // @Success 200 {object} map[string]interface{}
 // @Router /pull [post]
 func gitPull(c *gin.Context) {
@@ -42,6 +43,7 @@ func gitPull(c *gin.Context) {
             Url string `json:"url" binding:"required"`
             Branch string `json:"branch" binding:"required"`
         }{}
+
 
         if err := c.BindJSON(&json); err == nil {
            // IF NO ERROR IN BINDING

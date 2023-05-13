@@ -22,6 +22,12 @@ paths:
         required: true
         schema:
           type: string
+      - description: Git URL
+        in: body
+        name: Url
+        required: true
+        schema:
+          type: string
       produces:
       - application/json
       responses:
