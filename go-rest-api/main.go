@@ -28,8 +28,9 @@ func homeLink(c *gin.Context) {
 // @Description Pull a github repository down.
 // @Tags root
 // @Accept json
+// @Param branch body string true "Branch Name"
+// @Param Url body string true "Git URL"
 // @Produce json
-// @Param   branch body string true "Branch Name"
 // @Success 200 {object} map[string]interface{}
 // @Router /pull [post]
 func gitPull(c *gin.Context) {
@@ -42,6 +43,7 @@ func gitPull(c *gin.Context) {
             Url string `json:"url" binding:"required"`
             Branch string `json:"branch" binding:"required"`
         }{}
+
 
         if err := c.BindJSON(&json); err == nil {
            // IF NO ERROR IN BINDING
@@ -62,11 +64,18 @@ func gitPull(c *gin.Context) {
              // need additional check for local changes where we should do a force pull.
                r, err := git.PlainOpen("/apps/" + path.Base(targetUrl.Path))
                w, err := r.Worktree() 
+               localRef, err := r.Reference(plumbing.ReferenceName("HEAD"), true)
+               remoteRef, err := r.Reference(plumbing.ReferenceName("refs/remotes/origin/"+json.Branch), true)
+               remotes, err := r.Remotes()
+
                pull := w.Pull(&git.PullOptions{
                  RemoteName: "origin",
                  Force: true,
                  ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", json.Branch)),
                })
+               fmt.Printf("localref: %s\n", localRef)
+               fmt.Printf("remoteref: %s\n", remoteRef)
+               fmt.Printf("remotes: %s\n", remotes)
                fmt.Printf("pull: %s\n", pull)
                fmt.Printf("pull: %T\n", pull)
                if pull == nil { 
@@ -80,6 +89,8 @@ func gitPull(c *gin.Context) {
                  fmt.Printf("git pull not equal nil")
                  c.JSON(http.StatusOK, gin.H{
                        "message": pull.Error(),
+                       "remoteref": remoteRef,
+                       "localref": localRef,
                        "repository": json.Url,
                        "branch": json.Branch})
                  return
