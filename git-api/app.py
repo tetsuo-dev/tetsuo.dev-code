@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, redirect
 from flasgger import Swagger
 from flasgger.utils import swag_from, validate
 from jsonschema import ValidationError
+from jsonschema import validate
 import git
 from git import Repo
 from pathlib import Path
@@ -17,9 +18,25 @@ def root():
 @app.route('/pull', methods=['POST'])
 @swag_from('pull.yml')
 def pull():
+    schema = {
+        "type": "object",
+        "properties": {
+            "url": {"type": "string"},
+            "branch": {"type": "string"},
+        },
+        "required": ["url", "branch"]
+    }
+    
+
+
     result_data = request.get_data()
     print(result_data)
+    print("******")
     data = request.get_json(force=True)
+
+    # Test k/v validity
+    validate(instance={"url": data['url'], "branch": data['branch']}, schema=schema)
+    print(data['url'])
     repo = data['url']
     branch = data['branch']
     parsed_url = urlparse(repo)
