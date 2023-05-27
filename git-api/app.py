@@ -8,6 +8,8 @@ from git import Repo
 from pathlib import Path
 from urllib.parse import urlparse
 import pathlib
+from flask_cors import CORS
+
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
