@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 import pathlib
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 swagger = Swagger(app)
 
 @app.route ('/')
