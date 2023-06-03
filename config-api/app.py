@@ -30,14 +30,17 @@ def config():
     if method == 'GET':
       print("received get")
       # perform get of unit config
-      # list out apps and ports 
+      # list out apps and ports
       message = {"message": "GET RECEIVED"}
       #return jsonify(message)
       url = "http://127.0.0.1:8888/config/"
       logging.info(url)
-      complete_config = requests.get(url)
+      complete_config = requests.get(url, headers={'Accept': 'application/json'})
+      with open("/tmp/foo", mode='wb') as localfile:
+          localfile.write(complete_config.content)
       logging.info(complete_config)
-      return jsonify(complete_config)
+      return (complete_config.content)
+
     if method == 'DELETE':
       print("received delete")
       # send delete for listener then the app
