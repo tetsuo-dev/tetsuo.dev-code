@@ -28,6 +28,9 @@
           </div>
         </div>
       </div>
+      <div class="container" id="get">
+        <v-btn type="submit" @click="get">GET CONFIG</v-btn>
+      </div>
       <v-progress-circular indeterminate color="purple" :size="128" :width="12" v-if="is_loading"></v-progress-circular>
     </div>
 
@@ -63,6 +66,16 @@
            async created() {
            	this.db = await this.getDb();
            	this.ready = true;
+           },
+           async get() {
+             this.is_loading = true;
+             await axios.get('http://3.25.186.133:8181/app')
+               .then((response) => {
+                      console.log(response)
+               })
+               .finally(() => {
+                 this.is_loading = false;
+                })
            },
            async submit(){
                  this.is_loading = true;
