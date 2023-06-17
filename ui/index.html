@@ -29,12 +29,14 @@
         </div>
       </div>
       <div class="container" id="get">
-        <v-btn type="submit" @click="configget">GET CONFIG - NO UI</v-btn>
+        <v-btn type="submit" @click="config_get">GET CONFIG - NO UI</v-btn>
+	{{ listeners }}
+	<li v-for="(item, key) in listeners">
+		{{ key }} - {{ item }}
+        </li>
+	
       </div>
       <v-progress-circular indeterminate color="purple" :size="128" :width="12" v-if="is_loading"></v-progress-circular>
-    </div>
-    <div class="container" id="config-get">
-
     </div>
 
 <div>
@@ -62,19 +64,27 @@
       const app_url = "http://www.svkcode.org:8181/app"
       const goo = new Vue({
          el: '#git-post',
-         data: {
-           is_loading: false,
+         data(){
+           return {
+             is_loading: false,
+             config_data: null,
+	     applications: null,
+	     listeners: null,
+           }
          },
          methods: {
            async created() {
            	this.db = await this.getDb();
            	this.ready = true;
            },
-           async get() {
+           async config_get() {
              this.is_loading = true;
-             await axios.get('http://www.svkcode.org:8181/app')
+             await axios.get(app_url)
                .then((response) => {
                       console.log(response)
+		      this.config_data = response.data
+		      this.listeners = response.data.listeners
+		      this.applications = response.data.applications
                })
                .finally(() => {
                  this.is_loading = false;
@@ -107,28 +117,6 @@
          } //end of methods
       }); // end of Vue
 
-      const getvue = new Vue({
-         el: '#config-get',
-         data: {
-           is_loading: false,
-           config: false,
-         },
-         methods: {
-           async created() {
-           	this.db = await this.getDb();
-           	this.ready = true;
-           },
-           async config-get() {
-             this.is_loading = true;
-             await axios.get('http://www.svkcode.org:8181/app')
-               .then((response) => {
-                      console.log(response)
-                      this.config = response
-               })
-               .finally(() => {
-                 this.is_loading = false;
-                })
-           },
     </script>
   </body>
 </html>
