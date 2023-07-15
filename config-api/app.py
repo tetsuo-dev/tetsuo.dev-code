@@ -55,7 +55,7 @@ def config():
       port = data['port']
       w_dir = data['directory']
 
-      f = open('unit-configs/foo')
+      f = open('unit-configs/node-template')
 
       data = json.load(f)
 
