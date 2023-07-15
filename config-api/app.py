@@ -54,6 +54,7 @@ def config():
       name = data['name']
       port = data['port']
       w_dir = data['directory']
+      language = data['language']
 
       f = open('unit-configs/node-template')
 

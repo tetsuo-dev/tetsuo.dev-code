@@ -24,6 +24,7 @@
             <v-text-field class="label-left" label="Git Repository URL" v-model="repourl"></v-text-field>
             <v-text-field class="label-left" label="Branch" v-model="branch"></v-text-field>
             <v-text-field class="label-left" label="Port" v-model="apport"></v-text-field>
+            <v-text-field class="label-left" label="Language" v-model="language"></v-text-field>
             <v-btn type="submit" @click="submit">Submit</v-btn>
           </div>
         </div>
@@ -99,6 +100,7 @@
                  const app_data = {
                    name: this.appname,
                    port: this.apport,
+                   language: this.language,
                    directory: "/apps/" + this.appname
                  }
                  await axios.post(git_url, git_data)
