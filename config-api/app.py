@@ -58,44 +58,54 @@ def config():
 
       # if we are njs or python or language we select a different template and modify if accordingly.
       # probably good to do functions here that can just have info passed to them.
-      f = open('unit-configs/node-template')
+      if language == 'node':
+        f = open('unit-configs/node-template')
 
-      data = json.load(f)
+        data = json.load(f)
 
-      logging.basicConfig(filename='/tmp/tetsuo.log', encoding='utf-8', level=logging.DEBUG)
+        logging.basicConfig(filename='/tmp/tetsuo.log', encoding='utf-8', level=logging.DEBUG)
 
-      data['applications'][name] = data['applications'].pop('node')
-      data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
-      data['applications'][name]['working_directory']=w_dir
-      logging.info("**************************************")
-      logging.info(data['listeners'])
-      logging.info(data['applications'][name]['working_directory'])
-      logging.info(data)
-      isExist = os.path.exists(w_dir)
-      if isExist == False:
-        print(isExist)
-        message = {"ERROR": "Directory does not exist"}
-        return jsonify(message)
-      else:
-        result = subprocess.run(['/usr/bin/npm', 'install'], capture_output=True, cwd=w_dir)
-        logging.info(result)
-        unit_module = subprocess.run(['/usr/bin/npm', 'install', 'unit-http'], capture_output=True, cwd=w_dir)
-        logging.info(unit_module)
+        data['applications'][name] = data['applications'].pop('node')
+        data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
+        data['applications'][name]['working_directory']=w_dir
+        logging.info("**************************************")
+        logging.info(data['listeners'])
+        logging.info(data['applications'][name]['working_directory'])
+        logging.info(data)
+        isExist = os.path.exists(w_dir)
+        if isExist == False:
+          print(isExist)
+          message = {"ERROR": "Directory does not exist"}
+          return jsonify(message)
+        else:
+          result = subprocess.run(['/usr/bin/npm', 'install'], capture_output=True, cwd=w_dir)
+          logging.info(result)
+          unit_module = subprocess.run(['/usr/bin/npm', 'install', 'unit-http'], capture_output=True, cwd=w_dir)
+          logging.info(unit_module)
 
-      # update the application component
-      url = "http://127.0.0.1:8888/config/applications/" + name
-      app_r = requests.put(url, json=data['applications'][name])
-      logging.info(app_r.text)
-      #time.sleep(15)
+        # update the application component
+        url = "http://127.0.0.1:8888/config/applications/" + name
+        app_r = requests.put(url, json=data['applications'][name])
+        logging.info(app_r.text)
+        #time.sleep(15)
 
-      # update the listener
-      url = "http://127.0.0.1:8888/config/listeners/" + "*:" + port
-      logging.info(url)
-      listener_r = requests.put(url, json=data['listeners']['*:' + port])
-      logging.info(listener_r.text)
-      logging.info(app_r.text)
-      #return (app_r.content, listener_r.content)
-      return (app_r.content)
+        # update the listener
+        url = "http://127.0.0.1:8888/config/listeners/" + "*:" + port
+        logging.info(url)
+        listener_r = requests.put(url, json=data['listeners']['*:' + port])
+        logging.info(listener_r.text)
+        logging.info(app_r.text)
+        #return (app_r.content, listener_r.content)
+        return (app_r.content)
+      if language == 'python':
+        f = open('unit-configs/python-template')
+
+        data = json.load(f)
+        data['applications'][name] = data['applications'].pop('python')
+        data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
+        data['applications'][name]['working_directory']=w_dir
+        return (data)
+
 
 @app.route('/info', methods=['GET'])
 @swag_from('info.yml')
