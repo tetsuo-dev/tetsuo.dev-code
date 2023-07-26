@@ -56,6 +56,8 @@ def config():
       w_dir = data['directory']
       language = data['language']
 
+      # if we are njs or python or language we select a different template and modify if accordingly.
+      # probably good to do functions here that can just have info passed to them.
       f = open('unit-configs/node-template')
 
       data = json.load(f)
@@ -91,6 +93,7 @@ def config():
       logging.info(url)
       listener_r = requests.put(url, json=data['listeners']['*:' + port])
       logging.info(listener_r.text)
+      logging.info(app_r.text)
       #return (app_r.content, listener_r.content)
       return (app_r.content)
 
