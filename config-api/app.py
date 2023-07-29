@@ -49,6 +49,7 @@ def config():
       
       message = {"message": "DELETE RECEIVED"}
       return jsonify(message)
+    # This is the POST which should really be a function in its own right that just handles different variables and selects different templates based on the inputs.
     if method == 'POST':
       data = request.get_json(force=True)
       name = data['name']
@@ -97,11 +98,12 @@ def config():
         logging.info(app_r.text)
         #return (app_r.content, listener_r.content)
         return (app_r.content)
+      # Select python as a language
       if language == 'python':
         f = open('unit-configs/python-template')
 
         data = json.load(f)
-        data['applications'][name] = data['applications'].pop('python')
+        data['applications'][name] = data['applications'].pop(language)
         data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
         data['applications'][name]['working_directory']=w_dir
         return (data)
