@@ -10,7 +10,7 @@
                        "type": "python",
                        "path": "/apps/python",
                        "module": "wsgi",
-                       "callable": "application",
+                       "callable": "app",
                        "working_directory": "/apps/python",
                        "processes": {
                          "max": 10,

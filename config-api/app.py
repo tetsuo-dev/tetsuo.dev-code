@@ -57,6 +57,7 @@ def config():
       w_dir = data['directory']
       language = data['language']
 
+      logging.basicConfig(filename='/tmp/tetsuo.log', encoding='utf-8', level=logging.DEBUG)
       # if we are njs or python or language we select a different template and modify if accordingly.
       # probably good to do functions here that can just have info passed to them.
       if language == 'node':
@@ -64,7 +65,6 @@ def config():
 
         data = json.load(f)
 
-        logging.basicConfig(filename='/tmp/tetsuo.log', encoding='utf-8', level=logging.DEBUG)
 
         data['applications'][name] = data['applications'].pop('node')
         data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
@@ -87,6 +87,7 @@ def config():
         # update the application component
         url = "http://127.0.0.1:8888/config/applications/" + name
         app_r = requests.put(url, json=data['applications'][name])
+        logging.info(data['applications'][name])
         logging.info(app_r.text)
         #time.sleep(15)
 
@@ -106,6 +107,13 @@ def config():
         data['applications'][name] = data['applications'].pop(language)
         data['listeners']={ "*:" + port : { "pass": "applications/" + name} }
         data['applications'][name]['working_directory']=w_dir
+        data['applications'][name]['path']=w_dir
+
+        # update the application component
+        url = "http://127.0.0.1:8888/config/applications/" + name
+        app_r = requests.put(url, json=data['applications'][name])
+        logging.info(data)
+        logging.info(app_r.text)
         return (data)
 
 
