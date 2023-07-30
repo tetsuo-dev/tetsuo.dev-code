@@ -114,7 +114,14 @@ def config():
         app_r = requests.put(url, json=data['applications'][name])
         logging.info(data)
         logging.info(app_r.text)
-        return (data)
+
+        # update the listener
+        url = "http://127.0.0.1:8888/config/listeners/" + "*:" + port
+        logging.info(url)
+        listener_r = requests.put(url, json=data['listeners']['*:' + port])
+        logging.info(listener_r.text)
+        logging.info(app_r.text)
+        return (app_r.content)
 
 
 @app.route('/info', methods=['GET'])
