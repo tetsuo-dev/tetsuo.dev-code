@@ -13,7 +13,7 @@ import (
     "github.com/libp2p/go-libp2p/p2p/protocol/ping"
     multiaddr "github.com/multiformats/go-multiaddr"
     "github.com/libp2p/go-libp2p/core/network"
-    "github.com/libp2p/go-libp2p/p2p/discovery/mdns"
+    _"github.com/libp2p/go-libp2p/p2p/discovery/mdns"
 )
 
 type config struct {

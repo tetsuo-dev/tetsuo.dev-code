@@ -26,6 +26,8 @@ const createNode = async () => {
     node.getMultiaddrs().forEach((addr) => {
       console.log(addr.toString())
   })
+  console.log('=============================')
 
   node.addEventListener('peer:discovery', (evt) => console.log('Discovered:', evt.detail.id.toString()))
+  //node.addEventListener('peer:discovery', (evt) => console.log('Discovered:', evt.detail))
 })()
