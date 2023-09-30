@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "unit-http": "*",
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
     "libp2p": "^0.35.5",
