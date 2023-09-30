@@ -20,19 +20,15 @@ responses:
   500:
     description: Something went very wrong
   200:
-    description: Return the repo, branch and destination
+    description: Return the repo, branch - tetsuo assumes the destination for you.
     schema:
       properties:
-        repo:
+        url:
           type: string
-          description: The Repository
+          description: The Repository URL
           default: none
         branch:
           type: string
           description: The Branch
-          default: none
-        dest:
-          type: string
-          description: The Destination
           default: none
 
