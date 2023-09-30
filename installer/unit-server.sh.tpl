@@ -217,7 +217,7 @@ curl -X PUT --data-binary '{
                            "unit-http/loader.mjs",
                            "--require",
                            "unit-http/loader",
-                           "test.js"
+                           "sync.js"
                        ]
                 }
         }
