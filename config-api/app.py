@@ -44,6 +44,9 @@ def config():
 
     if method == 'DELETE':
       print("received delete")
+      url = "http://127.0.0.1:8888/config/"
+      data = request.get_json(force=True)
+      app = data['app_name']
       # send delete for listener then the app
       # get all listeners and search for app 
       

@@ -11,6 +11,7 @@ parameters:
         - name
         - port
         - directory
+        - language
       properties:
        name: 
          type: string 
@@ -21,6 +22,9 @@ parameters:
        directory: 
          type: string 
          example: /apps/swapi-json-server
+       language:
+         type: string
+         example: python
 responses:
   500:
     description: Something went very wrong
