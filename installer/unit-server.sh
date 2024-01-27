@@ -25,7 +25,7 @@ if [ $UNATTENDED -eq 1 ] && [ $INTERACTIVE -eq 1 ]; then
         echo "You cannot perform both an Interactive and Unattended installation at the same time."
 fi
 
-if [ $UNATTENDED eq 1 ]
+if [ $UNATTENDED eq 1 ] ; then
   FILE=/tmp/firstrun.log
   if [ ! -e $FILE ]
   then
