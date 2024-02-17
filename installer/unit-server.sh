@@ -4,9 +4,23 @@ UNIT_VERSION="1.30.0-1~lunar"
 UNATTENDED=0
 INTERACTIVE=0
 
+help() {
+
+  echo "TETSUO INSTALLER"
+  echo "${0##*/}"
+  echo "-h | --help: This help message"
+  echo "-u | --unattended: Unattended installation"
+  echo "-i | --interactive: Interactive installation"
+}
+
+# We translate all of the options to upper case to make it easier to deal with.
 while [ $# -gt 0 ]; do
   OPTION=$(echo $1 | tr '[a-z]' '[A-Z]')
   case $OPTION in
+    "-H" | "--HELP" )
+       help
+       shift
+       ;;
     "-U" | "--UNATTENDED" )
        UNATTENDED=1
        shift
@@ -25,20 +39,32 @@ if [ $UNATTENDED -eq 1 ] && [ $INTERACTIVE -eq 1 ]; then
         echo "You cannot perform both an Interactive and Unattended installation at the same time."
 fi
 
-if [ $UNATTENDED eq 1 ] ; then
+output_off() {
   FILE=/tmp/firstrun.log
   if [ ! -e $FILE ]
   then
    touch $FILE
-   nohup $0 0<&- &>/dev/null &
    exit
   fi
-  
-  exec 1<&-
-  exec 2<&-
-  exec 1<>$FILE
-  exec 2>&1
+
+  exec &>>$FILE
+}
+
+output_on() {
+  exec &>$(tty)
+}
+
+if [ "$UNATTENDED" = 1 ] ; then
+	output_off
+	sleep 3
 fi
+if [ "$INTERACTIVE" = 1 ] ; then
+	output_on
+fi
+
+echo "TESTING"
+
+
 
 echo "firstrun debug: starting-config"
 sudo curl --output /usr/share/keyrings/nginx-keyring.gpg  \
