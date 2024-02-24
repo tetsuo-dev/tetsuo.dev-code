@@ -99,30 +99,30 @@ tar -C /usr/local -xzf /tmp/go1.20.4.linux-amd64.tar.gz
 
 export PATH=$PATH:/usr/local/go/bin
 echo "########################################################################################"
-apt install -y unit=$UNIT_VERSION
+#apt install -y unit=$UNIT_VERSION
+apt install -y unit
 echo "########################################################################################"
-apt install -y unit-dev=$UNIT_VERSION
-apt install -y unit-go=$UNIT_VERSION
-apt install -y unit-jsc11=$UNIT_VERSION
-apt install -y unit-jsc17=$UNIT_VERSION
-apt install -y unit-jsc18=$UNIT_VERSION
-apt install -y unit-jsc19=$UNIT_VERSION
-apt install -y unit-jsc20=$UNIT_VERSION
-apt install -y unit-perl=$UNIT_VERSION
-apt install -y unit-php=$UNIT_VERSION
-apt install -y unit-python3.11 
-apt install -y unit-ruby
-apt install -y unit-python3.11
-
-sudo apt update
-sudo apt install unit
-sudo apt install unit-dev unit-go unit-jsc11 unit-jsc17 unit-jsc18 unit-jsc19 unit-jsc20  \
+#apt install -y unit-dev=$UNIT_VERSION
+#apt install -y unit-go=$UNIT_VERSION
+#apt install -y unit-jsc11=$UNIT_VERSION
+#apt install -y unit-jsc17=$UNIT_VERSION
+#apt install -y unit-jsc18=$UNIT_VERSION
+#apt install -y unit-jsc19=$UNIT_VERSION
+#apt install -y unit-jsc20=$UNIT_VERSION
+#apt install -y unit-perl=$UNIT_VERSION
+#apt install -y unit-php=$UNIT_VERSION
+#apt install -y unit-python3.11 
+#apt install -y unit-ruby
+#apt install -y unit-python3.11
+#
+sudo apt install -y unit-dev unit-go unit-jsc11 unit-jsc17 unit-jsc18 unit-jsc19 unit-jsc20  \
               unit-perl unit-php unit-python3.11 unit-ruby unit-wasm
 sudo systemctl restart unit
 
+
+
 echo "########################################################################################"
 sleep 30
-exit 1;
 systemctl start unit
 mkdir -p /apps/status
 chown unit:unit /apps
