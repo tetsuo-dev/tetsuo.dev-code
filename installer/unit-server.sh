@@ -115,9 +115,9 @@ echo "##########################################################################
 #apt install -y unit-ruby
 #apt install -y unit-python3.11
 #
-sudo apt install -y unit-dev unit-go unit-jsc11 unit-jsc17 unit-jsc18 unit-jsc19 unit-jsc20  \
+apt install -y unit-dev unit-go unit-jsc11 unit-jsc17 unit-jsc18 unit-jsc19 unit-jsc20  \
               unit-perl unit-php unit-python3.11 unit-ruby unit-wasm
-sudo systemctl restart unit
+systemctl restart unit
 
 
 
