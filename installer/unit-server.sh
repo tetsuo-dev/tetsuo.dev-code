@@ -179,22 +179,22 @@ cd /apps
 git clone -b rel-0.9 https://github.com/tetsuo-dev/tetsuo.dev-code
 echo "<p>Cloned TETSUO</p>" >> /apps/status/index.html
 ######### BUILD GOLANG MODULES###########
-cd /apps/tetsuo.dev-code/go-rest-api
-export GO111MODULE=on
-rm -rf go.mod
-sleep 5
-go mod init go-rest-api
-go mod tidy
-pwd
-id
-whoami
-export GOMODCACHE=/root/go
-export HOME=/root/
-echo "running go get"
-go get
-echo "running go build"
-go build
-echo "<p>built go api</p>" >> /apps/status/index.html
+#cd /apps/tetsuo.dev-code/go-rest-api
+#export GO111MODULE=on
+#rm -rf go.mod
+#sleep 5
+#go mod init go-rest-api
+#go mod tidy
+#pwd
+#id
+#whoami
+#export GOMODCACHE=/root/go
+#export HOME=/root/
+#echo "running go get"
+#go get
+#echo "running go build"
+#go build
+#echo "<p>built go api</p>" >> /apps/status/index.html
 ######### BUILD NPM MODULES###########
 cd /apps/tetsuo.dev-code/multicast-sync
 npm i
