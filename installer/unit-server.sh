@@ -3,7 +3,7 @@
 UNIT_VERSION="1.30.0-1~lunar"
 UNATTENDED=0
 INTERACTIVE=0
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 help() {
 
@@ -63,7 +63,6 @@ if [ "$INTERACTIVE" = 1 ] ; then
 	output_on
 fi
 
-echo "TESTING"
 
 
 
@@ -96,6 +95,8 @@ apt update
 #curl -L https://go.dev/dl/go1.19.linux-amd64.tar.gz -o /tmp/go1.19.linux-amd64.tar.gz
 curl -L https://go.dev/dl/go1.20.4.linux-amd64.tar.gz -o /tmp/go1.20.4.linux-amd64.tar.gz
 tar -C /usr/local -xzf /tmp/go1.20.4.linux-amd64.tar.gz
+
+exit 1;
 
 export PATH=$PATH:/usr/local/go/bin
 echo "########################################################################################"
