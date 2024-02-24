@@ -96,7 +96,6 @@ apt update
 curl -L https://go.dev/dl/go1.20.4.linux-amd64.tar.gz -o /tmp/go1.20.4.linux-amd64.tar.gz
 tar -C /usr/local -xzf /tmp/go1.20.4.linux-amd64.tar.gz
 
-exit 1;
 
 export PATH=$PATH:/usr/local/go/bin
 echo "########################################################################################"
@@ -114,11 +113,16 @@ apt install -y unit-php=$UNIT_VERSION
 apt install -y unit-python3.11 
 apt install -y unit-ruby
 apt install -y unit-python3.11
-#apt install -y unit-dev
-#apt install -y unit-go
+
+sudo apt update
+sudo apt install unit
+sudo apt install unit-dev unit-go unit-jsc11 unit-jsc17 unit-jsc18 unit-jsc19 unit-jsc20  \
+              unit-perl unit-php unit-python3.11 unit-ruby unit-wasm
 sudo systemctl restart unit
+
 echo "########################################################################################"
 sleep 30
+exit 1;
 systemctl start unit
 mkdir -p /apps/status
 chown unit:unit /apps
