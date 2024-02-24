@@ -3,6 +3,7 @@
 UNIT_VERSION="1.30.0-1~lunar"
 UNATTENDED=0
 INTERACTIVE=0
+DEBIAN_FRONTEND=noninteractive
 
 help() {
 
