@@ -175,7 +175,6 @@ usermod -s /bin/bash unit
 MY_IP=$(ip -br addr | grep eth0 | awk '{print $3}' | awk -F"/" '{print $1}' | head -1)
 unitd --modulesdir /usr/lib/unit/modules --control 0.0.0.0:8888 --user root --group root --group root
 cd /apps
-#git clone -b rel-0.7 https://github.com/tetsuo-dev/tetsuo.dev-code
 git clone -b rel-0.9 https://github.com/tetsuo-dev/tetsuo.dev-code
 echo "<p>Cloned TETSUO</p>" >> /apps/status/index.html
 ######### BUILD GOLANG MODULES###########
