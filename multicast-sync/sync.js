@@ -97,7 +97,9 @@ const request = require('request')
   })
   app.post('/app-install', (req, res) => {
     console.log(req.body)
-    console.log(req.body.foo)
+    var repo=req.body.repo
+    var branch=req.body.branch
+    console.log(repo)
     res.end('Published config event to all other nodes');
   })
   app.listen(port, () => {
