@@ -95,8 +95,14 @@ const request = require('request')
     res.end('Published config event to all other nodes');
     node.pubsub.publish(topic, ar_host_port[0])
   })
+  app.post('/app-install', (req, res) => {
+    console.log(req.body)
+    console.log(req.body.foo)
+    res.end('Published config event to all other nodes');
+  })
   app.listen(port, () => {
     console.log('REST config endpoint listeneing on: ' + port)
   })
+
 
 })();
