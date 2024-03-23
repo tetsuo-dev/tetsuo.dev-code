@@ -11,6 +11,8 @@ const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
+const simpleGit = require('simple-git')
+
 
 ;(async () => {
   const node = await Libp2p.create({
