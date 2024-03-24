@@ -108,7 +108,7 @@ const simpleGit = require('simple-git')
     var language=req.body.language
     console.log(repo)
     console.log(branch)
-    node.pubsub.publish(git_topic, "foo")
+    node.pubsub.publish(git_topic, "foo ")
     res.end('Published config event to all other nodes');
     
   })
