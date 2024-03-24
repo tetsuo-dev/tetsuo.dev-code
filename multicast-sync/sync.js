@@ -59,6 +59,9 @@ const simpleGit = require('simple-git')
   const topic = 'news'
   node.pubsub.subscribe(topic)
   console.log(`pubsub subscribed to topic: ${topic}`)
+  const git_topic = 'git'
+  node.pubsub.subscribe(git_topic)
+  console.log(`pubsub subscribed to topic: ${git_topic}`)
 
   node.pubsub.on(topic, (msg) => {
     console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg.from}`)
@@ -98,11 +101,16 @@ const simpleGit = require('simple-git')
     node.pubsub.publish(topic, ar_host_port[0])
   })
   app.post('/app-install', (req, res) => {
+    console.log(req)
     console.log(req.body)
     var repo=req.body.repo
     var branch=req.body.branch
+    var language=req.body.language
     console.log(repo)
+    console.log(branch)
+    node.pubsub.publish(git_topic, "foo")
     res.end('Published config event to all other nodes');
+    
   })
   app.listen(port, () => {
     console.log('REST config endpoint listeneing on: ' + port)
