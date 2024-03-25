@@ -84,6 +84,9 @@ const simpleGit = require('simple-git')
     })  
   })
 
+  node.pubsub.on(git_topic, (msg) => {
+    console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg.from}`)
+  })
   
   app = express()
   port = process.env.PORT || 3000;
@@ -103,12 +106,12 @@ const simpleGit = require('simple-git')
   app.post('/app-install', (req, res) => {
     console.log(req)
     console.log(req.body)
-    var repo=req.body.repo
+    let repo=req.body.repo
     var branch=req.body.branch
     var language=req.body.language
     console.log(repo)
     console.log(branch)
-    node.pubsub.publish(git_topic, "foo ")
+    node.pubsub.publish(git_topic, `${repo} ${branch} ${language}`)
     res.end('Published config event to all other nodes');
     
   })
