@@ -85,6 +85,7 @@ const simpleGit = require('simple-git')
   })
 
   node.pubsub.on(git_topic, (msg) => {
+    console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg}`)
     console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg.from}`)
   })
   
