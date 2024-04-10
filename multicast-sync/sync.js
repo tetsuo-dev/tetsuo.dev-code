@@ -87,6 +87,16 @@ const simpleGit = require('simple-git')
   node.pubsub.on(git_topic, (msg) => {
     console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg}`)
     console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg.from}`)
+
+    var fooble = uint8ArrayToString(msg.data)
+    console.log(fooble)
+    var git_split_string = fooble.split(" ")
+    var git_repo=git_split_string[0]
+    var git_branch=git_split_string[1]
+    var git_language=git_split_string[2]
+
+    console.log(git_repo)
+
   })
   
   app = express()
