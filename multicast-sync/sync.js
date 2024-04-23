@@ -12,6 +12,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const simpleGit = require('simple-git')
+const exec = require('child_process').exec;
+
 
 
 ;(async () => {
@@ -84,18 +86,29 @@ const simpleGit = require('simple-git')
     })  
   })
 
+// The following part is receiving messages of type git_topic.
+// This is where different nodes will receive messages to update their own local repositories.
   node.pubsub.on(git_topic, (msg) => {
     console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg}`)
     console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg.from}`)
 
-    var fooble = uint8ArrayToString(msg.data)
-    console.log(fooble)
-    var git_split_string = fooble.split(" ")
+    var message = uint8ArrayToString(msg.data)
+    console.log(message)
+    var git_split_string = message.split(" ")
     var git_repo=git_split_string[0]
     var git_branch=git_split_string[1]
     var git_language=git_split_string[2]
 
     console.log(git_repo)
+    git_pull_cmd = `echo git pull ${git_repo} -b ${git_branch}`
+    do_git_pull = exec(git_pull_cmd, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`${error}`);
+      return;
+    }
+    git_stdout = (`${stdout}`);
+    console.log(git_stdout)
+    }) // end of git_pull function
 
   })
   
