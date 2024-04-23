@@ -95,6 +95,10 @@ const simpleGit = require('simple-git')
     var git_branch=git_split_string[1]
     var git_language=git_split_string[2]
 
+    const simpleGit = require("simple-git");
+    const git = simpleGit.default();
+    
+    git.clone(git_repo, ["/tmp"])
     console.log(git_repo)
 
   })
