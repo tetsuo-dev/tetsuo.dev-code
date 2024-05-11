@@ -11,6 +11,7 @@
   "dependencies": {
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
+    "isomorphic-git": "^1.25.10",
     "libp2p": "^0.35.5",
     "libp2p-bootstrap": "^0.14.0",
     "libp2p-gossipsub": "^0.12.1",
@@ -24,7 +25,6 @@
     "multiaddr": "^10.0.1",
     "peer-id": "^0.16.0",
     "simple-git": "^3.23.0",
-    "uint8arrays": "^3.0.0",
-    "unit-http": "1.32.0"
+    "uint8arrays": "^3.0.0"
   }
 }

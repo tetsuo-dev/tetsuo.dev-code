@@ -11,7 +11,7 @@ const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
-const simpleGit = require('simple-git')
+const git = require('isomorphic-git')
 
 
 ;(async () => {
@@ -89,16 +89,21 @@ const simpleGit = require('simple-git')
     console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg.from}`)
 
     var fooble = uint8ArrayToString(msg.data)
-    //console.log(fooble)
     var git_split_string = fooble.split(" ")
     var git_repo=git_split_string[0]
     var git_branch=git_split_string[1]
     var git_language=git_split_string[2]
 
-    const git = simpleGit.default();
-    
-    //console.log(git)
-    git.clone(git_repo, ["/tmp"])
+    git.clone({
+      fs,
+      http,
+      dir: '/tutorial',
+      corsProxy: 'https://cors.isomorphic-git.org',
+      url: 'https://github.com/isomorphic-git/isomorphic-git',
+      singleBranch: true,
+      depth: 1
+    })
+    console.log('done')
     console.log(git_repo)
 
   })
