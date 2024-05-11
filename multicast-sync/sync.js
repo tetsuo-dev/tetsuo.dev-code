@@ -11,7 +11,6 @@ const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
-const git = require('isomorphic-git')
 
 
 ;(async () => {
@@ -94,15 +93,22 @@ const git = require('isomorphic-git')
     var git_branch=git_split_string[1]
     var git_language=git_split_string[2]
 
-    git.clone({
-      fs,
-      http,
-      dir: '/tutorial',
-      corsProxy: 'https://cors.isomorphic-git.org',
-      url: 'https://github.com/isomorphic-git/isomorphic-git',
-      singleBranch: true,
-      depth: 1
-    })
+    console.log("setting up do clone")
+    console.log(git_repo)
+
+    const do_clone = async() => {
+      const { exec } = require('node:child_process')
+      await exec('git clone ' + git_repo + ' /tmp/test2', (err, output) => {
+        if (err) {
+          console.error('problem: ' + err)
+          return
+        }
+        console.log('Output is: ' + output)
+      }) // end of await
+    } //end of const async
+    do_clone()
+    console.log('done')
+
     console.log('done')
     console.log(git_repo)
 
