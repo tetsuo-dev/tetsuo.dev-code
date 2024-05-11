@@ -89,15 +89,15 @@ const simpleGit = require('simple-git')
     console.log(`received: ${uint8ArrayToString(msg.data)} from ${msg.from}`)
 
     var fooble = uint8ArrayToString(msg.data)
-    console.log(fooble)
+    //console.log(fooble)
     var git_split_string = fooble.split(" ")
     var git_repo=git_split_string[0]
     var git_branch=git_split_string[1]
     var git_language=git_split_string[2]
 
-    const simpleGit = require("simple-git");
     const git = simpleGit.default();
     
+    //console.log(git)
     git.clone(git_repo, ["/tmp"])
     console.log(git_repo)
 
@@ -119,13 +119,10 @@ const simpleGit = require('simple-git')
     node.pubsub.publish(topic, ar_host_port[0])
   })
   app.post('/app-install', (req, res) => {
-    console.log(req)
     console.log(req.body)
     let repo=req.body.repo
     var branch=req.body.branch
     var language=req.body.language
-    console.log(repo)
-    console.log(branch)
     node.pubsub.publish(git_topic, `${repo} ${branch} ${language}`)
     res.end('Published config event to all other nodes');
     
