@@ -96,9 +96,10 @@ const request = require('request')
     console.log("setting up do clone")
     console.log(git_repo)
 
+
     const do_clone = async() => {
       const { exec } = require('node:child_process')
-      await exec('git clone ' + git_repo + ' /tmp/test2', (err, output) => {
+      await exec('git clone ' + git_repo + ' /apps', (err, output) => {
         if (err) {
           console.error('problem: ' + err)
           return
@@ -107,8 +108,6 @@ const request = require('request')
       }) // end of await
     } //end of const async
     do_clone()
-    console.log('done')
-
     console.log('done')
     console.log(git_repo)
 
