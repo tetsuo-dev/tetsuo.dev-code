@@ -25,6 +25,7 @@
     "multiaddr": "^10.0.1",
     "peer-id": "^0.16.0",
     "simple-git": "^3.23.0",
-    "uint8arrays": "^3.0.0"
+    "uint8arrays": "^3.0.0",
+    "unit-http": "^1.32.1"
   }
 }
