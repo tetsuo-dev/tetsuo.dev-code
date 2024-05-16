@@ -197,7 +197,7 @@ echo "<p>Cloned TETSUO</p>" >> /apps/status/index.html
 ######### BUILD NPM MODULES###########
 cd /apps/tetsuo.dev-code/multicast-sync
 npm i
-
+npm i unit-httpd
 chown -R unit:unit /apps
 set -x
 curl -X PUT --data-binary '{
